@@ -1,26 +1,184 @@
+/* ── Google Fonts ───────────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap");
+
 @import "tailwindcss";
 
+/* ── Design Tokens ─────────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:        #020408;
+  --panel:     rgba(8, 15, 26, 0.80);
+  --panel-hi:  rgba(10, 20, 40, 0.92);
+  --border:    rgba(30, 80, 180, 0.22);
+  --border-hi: rgba(56, 189, 248, 0.40);
+  --accent:    #2563eb;
+  --accent-hi: #60a5fa;
+  --neon:      #38bdf8;
+  --text:      #e2e8f0;
+  --muted:     #64748b;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  /* Glow shadows */
+  --glow-blue: 0 0 24px 6px rgba(37, 99, 235, 0.35);
+  --glow-neon: 0 0 32px 10px rgba(56, 189, 248, 0.45);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ── Reset & Base ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
+
+/* ── Animated dot-grid background ──────────────────────────────────────── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: radial-gradient(circle, rgba(37, 99, 235, 0.18) 1px, transparent 1px);
+  background-size: 36px 36px;
+  animation: grid-drift 20s linear infinite;
+  pointer-events: none;
+}
+
+/* Radial vignette over the grid — keeps centre clear for content */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 30%, var(--bg) 80%);
+  pointer-events: none;
+}
+
+@keyframes grid-drift {
+  0%   { background-position: 0 0; }
+  100% { background-position: 36px 36px; }
+}
+
+/* ── Custom Keyframes ──────────────────────────────────────────────────── */
+
+/* Outer ring pulse — used by hold-to-talk button */
+@keyframes ring-pulse {
+  0%, 100% { transform: scale(1);    opacity: 0.4; }
+  50%       { transform: scale(1.6);  opacity: 0; }
+}
+
+/* Secondary ring, offset timing */
+@keyframes ring-pulse-2 {
+  0%, 100% { transform: scale(1);    opacity: 0.25; }
+  50%       { transform: scale(2.0);  opacity: 0; }
+}
+
+/* Soft shimmer for active recording core */
+@keyframes record-glow {
+  0%, 100% { box-shadow: 0 0 28px 8px  rgba(96, 165, 250, 0.45); }
+  50%       { box-shadow: 0 0 56px 22px rgba(56, 189, 248, 0.70); }
+}
+
+/* Step reveal from below */
+@keyframes step-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Result card entrance */
+@keyframes card-rise {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* Subtle idle shimmer on border */
+@keyframes border-shimmer {
+  0%   { border-color: rgba(30, 80, 180, 0.20); }
+  50%  { border-color: rgba(56, 189, 248, 0.55); }
+  100% { border-color: rgba(30, 80, 180, 0.20); }
+}
+
+/* Scanning dots */
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: translateY(0);   opacity: 0.35; }
+  40%           { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Manifestation success — slow cinematic text reveal */
+@keyframes manifest-fade {
+  0%   { opacity: 0; transform: translateY(18px) scale(0.96); filter: blur(8px); }
+  60%  { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* Neon glow pulse behind manifestation text */
+@keyframes manifest-glow {
+  0%, 100% { opacity: 0.40; transform: scale(1); }
+  50%      { opacity: 0.85; transform: scale(1.06); }
+}
+
+/* Checkmark entrance */
+@keyframes check-pop {
+  0%   { opacity: 0; transform: scale(0.3) rotate(-10deg); }
+  55%  { opacity: 1; transform: scale(1.18) rotate(2deg); }
+  100% { opacity: 1; transform: scale(1)   rotate(0deg); }
+}
+
+/* Processing spinner */
+@keyframes spin-slow {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Aurora bloom behind orb */
+@keyframes aurora-pulse {
+  0%, 100% { opacity: 0.30; transform: translate(-50%, -50%) scale(1); }
+  50%       { opacity: 0.55; transform: translate(-50%, -50%) scale(1.12); }
+}
+
+/* Transcript card fade-slide in */
+@keyframes transcript-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Utility Classes ───────────────────────────────────────────────────── */
+.animate-ring-pulse        { animation: ring-pulse        2.2s ease-in-out infinite; }
+.animate-ring-pulse2       { animation: ring-pulse-2      2.2s ease-in-out infinite 0.5s; }
+.animate-record-glow       { animation: record-glow       1.6s ease-in-out infinite; }
+.animate-step-in           { animation: step-in           0.4s ease forwards; }
+.animate-card-rise         { animation: card-rise         0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+.animate-border-shimmer    { animation: border-shimmer    3.5s ease-in-out infinite; }
+.animate-manifest-fade     { animation: manifest-fade     1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.animate-manifest-glow     { animation: manifest-glow     3s ease-in-out infinite; }
+.animate-check-pop         { animation: check-pop         0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+.animate-spin-slow         { animation: spin-slow         1.5s linear infinite; }
+.animate-aurora-pulse      { animation: aurora-pulse      4s ease-in-out infinite; }
+.animate-transcript-in     { animation: transcript-in     0.45s ease forwards; }
+
+/* ── Glassmorphism utility ─────────────────────────────────────────────── */
+.glass {
+  background: var(--panel);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+}
+
+.glass-hi {
+  background: var(--panel-hi);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-hi);
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(37, 99, 235, 0.3); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.5); }

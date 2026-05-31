@@ -1,20 +1,66 @@
 import { z } from "zod";
 
-export const OrderIntentSchema = z.object({
-  is_intent_clear: z.boolean().describe("True if the user clearly stated an item they want to buy or interact with."),
-  is_complete: z.boolean().describe("True if there is enough information to execute a product search on ONDC."),
-  
-  // The core transaction payload
-  extracted_data: z.object({
-    item_name: z.string().nullable().describe("The core product name, e.g., 'bread', 'milk'. Null if not found."),
-    brand_preference: z.string().nullable().describe("Specific brand if mentioned, e.g., 'Zepto', 'Amul'. Null if none."),
-    quantity: z.number().int().positive().default(1).describe("Number of items requested. Default to 1 if not stated."),
-    category: z.string().nullable().describe("General category like 'grocery', 'electronics'. Null if unknown."),
-  }).nullable(),
+// ── Routing Enum ─────────────────────────────────────────────────────────────
+export const RoutingSchema = z.enum([
+  "ONDC_SEARCH",
+  "DIRECT_APP",
+  "UNKNOWN",
+]);
+export type Routing = z.infer<typeof RoutingSchema>;
 
-  // Fallback state for conversational memory
-  clarification_needed: z.string().nullable().describe("If is_complete is false, provide a short, 1-sentence question to ask the user to get the missing info. e.g., 'What brand of bread?'"),
+// ── Core Intent Schema ───────────────────────────────────────────────────────
+export const IntentSchema = z.object({
+  /** The canonical product name extracted from the utterance */
+  item_name: z.string().nullable().optional(),
+
+  /** Normalized quantity; defaults to 1 when not specified */
+  quantity: z.number().int().positive().default(1),
+
+  /** Preferred brand if explicitly mentioned ("Amul", "Bisleri", …) */
+  brand_preference: z.string().nullable().optional(),
+
+  /** Preferred unit of measure ("litre", "kg", "pack", …) */
+  unit: z.string().nullable().optional(),
+
+  /** How the agent should route this intent */
+  routing: RoutingSchema,
+
+  /**
+   * When routing === "DIRECT_APP", the specific store to deep-link into.
+   * Populated by the agent based on brand_preference or category rules.
+   */
+  store_brand: z.string().nullable().optional(),
+
+  /**
+   * Human-readable clarification question surfaced when routing === "UNKNOWN".
+   * The UI renders this verbatim so it must be user-facing prose.
+   */
+  clarification_needed: z.string().nullable().optional(),
+
+  /**
+   * Ordered list of Chain-of-Thought reasoning steps produced by LangGraph.
+   * Each entry is a single sentence summarising one agent decision.
+   */
+  steps: z.array(z.string()).default([]),
 });
 
-// We export the TypeScript type so our Next.js UI knows exactly what to expect
-export type OrderIntent = z.infer<typeof OrderIntentSchema>;
+export type Intent = z.infer<typeof IntentSchema>;
+
+// ── API Response Wrapper ─────────────────────────────────────────────────────
+export const IntentResponseSchema = z.object({
+  success: z.boolean(),
+  intent: IntentSchema.optional(),
+  error: z.string().optional(),
+});
+
+export type IntentResponse = z.infer<typeof IntentResponseSchema>;
+
+// ── STT Response Schema ──────────────────────────────────────────────────────
+export const STTResponseSchema = z.object({
+  success: z.boolean(),
+  text: z.string().optional(),
+  error: z.string().optional(),
+  details: z.string().optional(),
+});
+
+export type STTResponse = z.infer<typeof STTResponseSchema>;
