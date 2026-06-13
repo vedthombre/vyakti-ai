@@ -1,0 +1,45 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+
+@theme inline {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --color-background: #ffffff;
+  --color-foreground: #444441;
+  --color-muted: #888780;
+  --color-accent: #1D9E75;
+  --color-accent-soft: #E1F5EE;
+  --color-accent-deep: #0F6E56;
+  --color-surface: #F1EFE8;
+  --color-border: #e5e5e5;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #444441;
+  --muted: #888780;
+  --accent: #1D9E75;
+  --accent-soft: #E1F5EE;
+  --accent-deep: #0F6E56;
+  --surface: #F1EFE8;
+  --border: #e5e5e5;
+}
+
+@layer base {
+  html, body {
+    background: #ffffff;
+    color: #444441;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  * {
+    border-color: #e5e5e5;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    color: #444441;
+  }
+}
