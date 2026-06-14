@@ -29,7 +29,7 @@ export async function POST(req: Request) {
         // 4. Low-Latency STT Execution
         const transcription = await groq.audio.transcriptions.create({
             file: audioFile,
-            model: 'whisper-large-v3',
+            model: 'whisper-large-v3-turbo',
             // Context biasing: primes the model for commerce vocabulary, reducing hallucination
             prompt: "The user is making an e-commerce order. Product names, brands, quantities like Zepto, Blinkit, Amul.",
             response_format: 'json',

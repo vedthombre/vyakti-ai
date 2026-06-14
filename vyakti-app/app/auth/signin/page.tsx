@@ -6,6 +6,13 @@ import { useRouter } from "next/navigation";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
+declare global {
+  interface Window {
+    recaptchaVerifier: any;
+    confirmationResult: any;
+  }
+}
+
 export default function SignInPage() {
   const router = useRouter();
   const [phone, setPhone] = useState("");

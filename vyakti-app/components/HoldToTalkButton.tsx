@@ -25,9 +25,8 @@ export default function HoldToTalkButton({
   const isRecording = appState === "RECORDING";
   const isBusy =
     appState === "TRANSCRIBING" ||
-    appState === "THINKING"     ||
-    appState === "PROCESSING";
-  const isDisabled = isBusy || appState === "MANIFESTED";
+    appState === "THINKING";
+  const isDisabled = isBusy;
 
   // ── MediaRecorder lifecycle ───────────────────────────────────────────────
 

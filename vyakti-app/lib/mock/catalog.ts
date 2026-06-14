@@ -1,0 +1,272 @@
+// Auto-generated from vyakti_mock_ecommerce_db.js
+
+export type Brand = {
+  id: string;
+  name: string;
+  emoji: string;
+  keywords: string[];
+};
+
+export type ProductVariant = {
+  id: string;
+  brandId: string;
+  name: string;
+  sku: string;
+  image: string;
+  searchKeywords: string[];
+};
+
+export type PlatformListing = {
+  variantId: string;
+  platform: "Blinkit" | "Zepto" | "Swiggy";
+  price: number;
+  eta: string;
+  deepLink: string;
+  inStock: boolean;
+};
+
+export const BRANDS: Brand[] = [
+  { id: "milk_amul_full_cream", name: "Amul Full Cream", emoji: "🥛", keywords: ["amul","full","cream","dairy","milk"] },
+  { id: "milk_amul_taaza", name: "Amul Taaza", emoji: "🥛", keywords: ["amul","taaza","dairy","milk"] },
+  { id: "milk_mother_dairy", name: "Mother Dairy", emoji: "🥛", keywords: ["mother","dairy","dairy","milk"] },
+  { id: "milk_gokul", name: "Gokul", emoji: "🥛", keywords: ["gokul","dairy"] },
+  { id: "bread_britannia", name: "Britannia Bread", emoji: "🌾", keywords: ["britannia","bread","groceries"] },
+  { id: "bread_harvest_gold", name: "Harvest Gold Bread", emoji: "🌾", keywords: ["harvest","gold","bread","groceries"] },
+  { id: "bread_english_oven", name: "English Oven Bread", emoji: "🌾", keywords: ["english","oven","bread","groceries"] },
+  { id: "eggs_farm_fresh", name: "Farm Fresh Eggs", emoji: "🥛", keywords: ["farm","fresh","eggs","dairy"] },
+  { id: "eggs_country_delight", name: "Country Delight Eggs", emoji: "🥛", keywords: ["country","delight","eggs","dairy"] },
+  { id: "eggs_nandini", name: "Nandini Eggs", emoji: "🥛", keywords: ["nandini","eggs","dairy"] },
+  { id: "butter_amul", name: "Amul Butter", emoji: "🥛", keywords: ["amul","butter","dairy"] },
+  { id: "butter_mother_dairy", name: "Mother Dairy Butter", emoji: "🥛", keywords: ["mother","dairy","butter","dairy"] },
+  { id: "butter_nandini", name: "Nandini Butter", emoji: "🥛", keywords: ["nandini","butter","dairy"] },
+  { id: "paneer", name: "Paneer", emoji: "🥛", keywords: ["paneer","dairy"] },
+  { id: "bananas", name: "Bananas", emoji: "🍎", keywords: ["bananas","fruits"] },
+];
+
+export const VARIANTS: ProductVariant[] = [
+  { id: "amul_full_500", brandId: "milk_amul_full_cream", name: "Amul Gold Full Cream Milk 500ml", sku: "amul_full_500", image: "🥛", searchKeywords: [] },
+  { id: "amul_full_1l", brandId: "milk_amul_full_cream", name: "Amul Gold Full Cream Milk 1L", sku: "amul_full_1l", image: "🥛", searchKeywords: [] },
+  { id: "amul_full_2l", brandId: "milk_amul_full_cream", name: "Amul Gold Full Cream Milk 2L", sku: "amul_full_2l", image: "🥛", searchKeywords: [] },
+  { id: "amul_full_5l", brandId: "milk_amul_full_cream", name: "Amul Gold Full Cream Milk 5L", sku: "amul_full_5l", image: "🥛", searchKeywords: [] },
+  { id: "amul_taaza_500", brandId: "milk_amul_taaza", name: "Amul Taaza Toned Milk 500ml", sku: "amul_taaza_500", image: "🥛", searchKeywords: [] },
+  { id: "amul_taaza_1l", brandId: "milk_amul_taaza", name: "Amul Taaza Toned Milk 1L", sku: "amul_taaza_1l", image: "🥛", searchKeywords: [] },
+  { id: "amul_taaza_2l", brandId: "milk_amul_taaza", name: "Amul Taaza Toned Milk 2L", sku: "amul_taaza_2l", image: "🥛", searchKeywords: [] },
+  { id: "md_full_500", brandId: "milk_mother_dairy", name: "Mother Dairy Full Cream 500ml", sku: "md_full_500", image: "🥛", searchKeywords: [] },
+  { id: "md_full_1l", brandId: "milk_mother_dairy", name: "Mother Dairy Full Cream 1L", sku: "md_full_1l", image: "🥛", searchKeywords: [] },
+  { id: "md_full_2l", brandId: "milk_mother_dairy", name: "Mother Dairy Full Cream 2L", sku: "md_full_2l", image: "🥛", searchKeywords: [] },
+  { id: "md_toned_500", brandId: "milk_mother_dairy", name: "Mother Dairy Toned Milk 500ml", sku: "md_toned_500", image: "🥛", searchKeywords: [] },
+  { id: "md_toned_1l", brandId: "milk_mother_dairy", name: "Mother Dairy Toned Milk 1L", sku: "md_toned_1l", image: "🥛", searchKeywords: [] },
+  { id: "gokul_std_500", brandId: "milk_gokul", name: "Gokul Standardised Milk 500ml", sku: "gokul_std_500", image: "🥛", searchKeywords: [] },
+  { id: "gokul_std_1l", brandId: "milk_gokul", name: "Gokul Standardised Milk 1L", sku: "gokul_std_1l", image: "🥛", searchKeywords: [] },
+  { id: "gokul_full_1l", brandId: "milk_gokul", name: "Gokul Full Cream Milk 1L", sku: "gokul_full_1l", image: "🥛", searchKeywords: [] },
+  { id: "gokul_full_2l", brandId: "milk_gokul", name: "Gokul Full Cream Milk 2L", sku: "gokul_full_2l", image: "🥛", searchKeywords: [] },
+  { id: "brit_white_400", brandId: "bread_britannia", name: "Britannia White Sandwich Bread 400g", sku: "brit_white_400", image: "🌾", searchKeywords: [] },
+  { id: "brit_brown_400", brandId: "bread_britannia", name: "Britannia 100% Whole Wheat Brown Bread 400g", sku: "brit_brown_400", image: "🌾", searchKeywords: [] },
+  { id: "brit_multi_400", brandId: "bread_britannia", name: "Britannia Multigrain Bread 400g", sku: "brit_multi_400", image: "🌾", searchKeywords: [] },
+  { id: "hg_white_400", brandId: "bread_harvest_gold", name: "Harvest Gold White Bread 400g", sku: "hg_white_400", image: "🌾", searchKeywords: [] },
+  { id: "hg_brown_400", brandId: "bread_harvest_gold", name: "Harvest Gold Brown Bread 400g", sku: "hg_brown_400", image: "🌾", searchKeywords: [] },
+  { id: "hg_multi_400", brandId: "bread_harvest_gold", name: "Harvest Gold Hearty Multigrain Bread 400g", sku: "hg_multi_400", image: "🌾", searchKeywords: [] },
+  { id: "eo_white_400", brandId: "bread_english_oven", name: "English Oven Sandwich White Bread 400g", sku: "eo_white_400", image: "🌾", searchKeywords: [] },
+  { id: "eo_brown_400", brandId: "bread_english_oven", name: "English Oven 100% Atta Brown Bread 400g", sku: "eo_brown_400", image: "🌾", searchKeywords: [] },
+  { id: "eo_multi_400", brandId: "bread_english_oven", name: "English Oven Multigrain Bread 400g", sku: "eo_multi_400", image: "🌾", searchKeywords: [] },
+  { id: "egg_white_6", brandId: "eggs_farm_fresh", name: "White Farm Fresh Eggs 6 pcs", sku: "egg_white_6", image: "🥛", searchKeywords: [] },
+  { id: "egg_white_10", brandId: "eggs_farm_fresh", name: "White Farm Fresh Eggs 10 pcs", sku: "egg_white_10", image: "🥛", searchKeywords: [] },
+  { id: "egg_white_12", brandId: "eggs_farm_fresh", name: "White Farm Fresh Eggs 12 pcs", sku: "egg_white_12", image: "🥛", searchKeywords: [] },
+  { id: "egg_white_30", brandId: "eggs_farm_fresh", name: "White Farm Fresh Eggs 30 pcs", sku: "egg_white_30", image: "🥛", searchKeywords: [] },
+  { id: "cd_white_6", brandId: "eggs_country_delight", name: "Country Delight Protein White Eggs 6 pcs", sku: "cd_white_6", image: "🥛", searchKeywords: [] },
+  { id: "cd_brown_6", brandId: "eggs_country_delight", name: "Country Delight Brown Eggs 6 pcs", sku: "cd_brown_6", image: "🥛", searchKeywords: [] },
+  { id: "nandini_6", brandId: "eggs_nandini", name: "Nandini Farm Fresh Eggs 6 pcs", sku: "nandini_6", image: "🥛", searchKeywords: [] },
+  { id: "nandini_30", brandId: "eggs_nandini", name: "Nandini Farm Fresh Eggs 30 pcs", sku: "nandini_30", image: "🥛", searchKeywords: [] },
+  { id: "amul_butter_100", brandId: "butter_amul", name: "Amul Pasteurized Salted Butter 100g", sku: "amul_butter_100", image: "🥛", searchKeywords: [] },
+  { id: "amul_butter_200", brandId: "butter_amul", name: "Amul Pasteurized Salted Butter 200g", sku: "amul_butter_200", image: "🥛", searchKeywords: [] },
+  { id: "amul_butter_500", brandId: "butter_amul", name: "Amul Pasteurized Salted Butter 500g", sku: "amul_butter_500", image: "🥛", searchKeywords: [] },
+  { id: "amul_unsalted_100", brandId: "butter_amul", name: "Amul Unsalted Butter 100g", sku: "amul_unsalted_100", image: "🥛", searchKeywords: [] },
+  { id: "amul_garlic_100", brandId: "butter_amul", name: "Amul Garlic & Herbs Butter 100g", sku: "amul_garlic_100", image: "🥛", searchKeywords: [] },
+  { id: "md_butter_100", brandId: "butter_mother_dairy", name: "Mother Dairy Classic Salted Butter 100g", sku: "md_butter_100", image: "🥛", searchKeywords: [] },
+  { id: "md_butter_500", brandId: "butter_mother_dairy", name: "Mother Dairy Classic Salted Butter 500g", sku: "md_butter_500", image: "🥛", searchKeywords: [] },
+  { id: "md_white_butter_100", brandId: "butter_mother_dairy", name: "Mother Dairy White Unsalted Butter 100g", sku: "md_white_butter_100", image: "🥛", searchKeywords: [] },
+  { id: "nandini_butter_100", brandId: "butter_nandini", name: "Nandini Pasteurised Butter 100g", sku: "nandini_butter_100", image: "🥛", searchKeywords: [] },
+  { id: "nandini_butter_500", brandId: "butter_nandini", name: "Nandini Pasteurised Butter 500g", sku: "nandini_butter_500", image: "🥛", searchKeywords: [] },
+  { id: "paneer_200", brandId: "paneer", name: "Amul Malai Paneer 200g", sku: "paneer_200", image: "🥛", searchKeywords: [] },
+  { id: "paneer_1kg", brandId: "paneer", name: "Amul Malai Paneer 1kg", sku: "paneer_1kg", image: "🥛", searchKeywords: [] },
+  { id: "banana_6", brandId: "bananas", name: "Fresh Robusta Bananas 6 pcs", sku: "banana_6", image: "🍎", searchKeywords: [] },
+  { id: "banana_12", brandId: "bananas", name: "Fresh Robusta Bananas 12 pcs", sku: "banana_12", image: "🍎", searchKeywords: [] },
+];
+
+export const LISTINGS: PlatformListing[] = [
+  { variantId: "amul_full_500", platform: "Blinkit" as const, price: 34, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Gold%20Full%20Cream%20Milk%20500ml", inStock: true },
+  { variantId: "amul_full_500", platform: "Zepto" as const, price: 36, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Gold%20Full%20Cream%20Milk%20500ml", inStock: true },
+  { variantId: "amul_full_500", platform: "Swiggy" as const, price: 35, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Gold%20Full%20Cream%20Milk%20500ml", inStock: true },
+  { variantId: "amul_full_1l", platform: "Blinkit" as const, price: 68, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Gold%20Full%20Cream%20Milk%201L", inStock: true },
+  { variantId: "amul_full_1l", platform: "Zepto" as const, price: 70, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Gold%20Full%20Cream%20Milk%201L", inStock: true },
+  { variantId: "amul_full_1l", platform: "Swiggy" as const, price: 68, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Gold%20Full%20Cream%20Milk%201L", inStock: true },
+  { variantId: "amul_full_2l", platform: "Blinkit" as const, price: 135, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Gold%20Full%20Cream%20Milk%202L", inStock: true },
+  { variantId: "amul_full_2l", platform: "Zepto" as const, price: 138, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Gold%20Full%20Cream%20Milk%202L", inStock: true },
+  { variantId: "amul_full_2l", platform: "Swiggy" as const, price: 136, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Gold%20Full%20Cream%20Milk%202L", inStock: true },
+  { variantId: "amul_full_5l", platform: "Blinkit" as const, price: 340, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Gold%20Full%20Cream%20Milk%205L", inStock: false },
+  { variantId: "amul_full_5l", platform: "Zepto" as const, price: 345, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Gold%20Full%20Cream%20Milk%205L", inStock: false },
+  { variantId: "amul_full_5l", platform: "Swiggy" as const, price: 342, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Gold%20Full%20Cream%20Milk%205L", inStock: true },
+  { variantId: "amul_taaza_500", platform: "Blinkit" as const, price: 30, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Taaza%20Toned%20Milk%20500ml", inStock: true },
+  { variantId: "amul_taaza_500", platform: "Zepto" as const, price: 32, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Taaza%20Toned%20Milk%20500ml", inStock: true },
+  { variantId: "amul_taaza_500", platform: "Swiggy" as const, price: 30, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Taaza%20Toned%20Milk%20500ml", inStock: true },
+  { variantId: "amul_taaza_1l", platform: "Blinkit" as const, price: 58, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Taaza%20Toned%20Milk%201L", inStock: true },
+  { variantId: "amul_taaza_1l", platform: "Zepto" as const, price: 60, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Taaza%20Toned%20Milk%201L", inStock: true },
+  { variantId: "amul_taaza_1l", platform: "Swiggy" as const, price: 58, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Taaza%20Toned%20Milk%201L", inStock: true },
+  { variantId: "amul_taaza_2l", platform: "Blinkit" as const, price: 115, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Taaza%20Toned%20Milk%202L", inStock: true },
+  { variantId: "amul_taaza_2l", platform: "Zepto" as const, price: 118, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Taaza%20Toned%20Milk%202L", inStock: true },
+  { variantId: "amul_taaza_2l", platform: "Swiggy" as const, price: 116, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Taaza%20Toned%20Milk%202L", inStock: true },
+  { variantId: "md_full_500", platform: "Blinkit" as const, price: 34, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Mother%20Dairy%20Full%20Cream%20500ml", inStock: true },
+  { variantId: "md_full_500", platform: "Zepto" as const, price: 35, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Mother%20Dairy%20Full%20Cream%20500ml", inStock: true },
+  { variantId: "md_full_500", platform: "Swiggy" as const, price: 34, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Mother%20Dairy%20Full%20Cream%20500ml", inStock: false },
+  { variantId: "md_full_1l", platform: "Blinkit" as const, price: 68, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Mother%20Dairy%20Full%20Cream%201L", inStock: true },
+  { variantId: "md_full_1l", platform: "Zepto" as const, price: 69, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Mother%20Dairy%20Full%20Cream%201L", inStock: true },
+  { variantId: "md_full_1l", platform: "Swiggy" as const, price: 68, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Mother%20Dairy%20Full%20Cream%201L", inStock: true },
+  { variantId: "md_full_2l", platform: "Blinkit" as const, price: 136, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Mother%20Dairy%20Full%20Cream%202L", inStock: true },
+  { variantId: "md_full_2l", platform: "Zepto" as const, price: 137, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Mother%20Dairy%20Full%20Cream%202L", inStock: true },
+  { variantId: "md_full_2l", platform: "Swiggy" as const, price: 136, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Mother%20Dairy%20Full%20Cream%202L", inStock: true },
+  { variantId: "md_toned_500", platform: "Blinkit" as const, price: 30, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Mother%20Dairy%20Toned%20Milk%20500ml", inStock: true },
+  { variantId: "md_toned_500", platform: "Zepto" as const, price: 31, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Mother%20Dairy%20Toned%20Milk%20500ml", inStock: true },
+  { variantId: "md_toned_500", platform: "Swiggy" as const, price: 30, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Mother%20Dairy%20Toned%20Milk%20500ml", inStock: true },
+  { variantId: "md_toned_1l", platform: "Blinkit" as const, price: 58, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Mother%20Dairy%20Toned%20Milk%201L", inStock: true },
+  { variantId: "md_toned_1l", platform: "Zepto" as const, price: 59, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Mother%20Dairy%20Toned%20Milk%201L", inStock: true },
+  { variantId: "md_toned_1l", platform: "Swiggy" as const, price: 58, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Mother%20Dairy%20Toned%20Milk%201L", inStock: true },
+  { variantId: "gokul_std_500", platform: "Blinkit" as const, price: 33, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Gokul%20Standardised%20Milk%20500ml", inStock: true },
+  { variantId: "gokul_std_500", platform: "Zepto" as const, price: 34, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Gokul%20Standardised%20Milk%20500ml", inStock: true },
+  { variantId: "gokul_std_500", platform: "Swiggy" as const, price: 33, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Gokul%20Standardised%20Milk%20500ml", inStock: true },
+  { variantId: "gokul_std_1l", platform: "Blinkit" as const, price: 66, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Gokul%20Standardised%20Milk%201L", inStock: true },
+  { variantId: "gokul_std_1l", platform: "Zepto" as const, price: 67, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Gokul%20Standardised%20Milk%201L", inStock: true },
+  { variantId: "gokul_std_1l", platform: "Swiggy" as const, price: 66, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Gokul%20Standardised%20Milk%201L", inStock: true },
+  { variantId: "gokul_full_1l", platform: "Blinkit" as const, price: 70, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Gokul%20Full%20Cream%20Milk%201L", inStock: true },
+  { variantId: "gokul_full_1l", platform: "Zepto" as const, price: 72, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Gokul%20Full%20Cream%20Milk%201L", inStock: true },
+  { variantId: "gokul_full_1l", platform: "Swiggy" as const, price: 70, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Gokul%20Full%20Cream%20Milk%201L", inStock: true },
+  { variantId: "gokul_full_2l", platform: "Blinkit" as const, price: 140, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Gokul%20Full%20Cream%20Milk%202L", inStock: false },
+  { variantId: "gokul_full_2l", platform: "Zepto" as const, price: 142, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Gokul%20Full%20Cream%20Milk%202L", inStock: true },
+  { variantId: "gokul_full_2l", platform: "Swiggy" as const, price: 140, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Gokul%20Full%20Cream%20Milk%202L", inStock: true },
+  { variantId: "brit_white_400", platform: "Blinkit" as const, price: 35, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Britannia%20White%20Sandwich%20Bread%20400g", inStock: true },
+  { variantId: "brit_white_400", platform: "Zepto" as const, price: 35, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Britannia%20White%20Sandwich%20Bread%20400g", inStock: true },
+  { variantId: "brit_white_400", platform: "Swiggy" as const, price: 35, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Britannia%20White%20Sandwich%20Bread%20400g", inStock: true },
+  { variantId: "brit_brown_400", platform: "Blinkit" as const, price: 45, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Britannia%20100%25%20Whole%20Wheat%20Brown%20Bread%20400g", inStock: true },
+  { variantId: "brit_brown_400", platform: "Zepto" as const, price: 45, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Britannia%20100%25%20Whole%20Wheat%20Brown%20Bread%20400g", inStock: true },
+  { variantId: "brit_brown_400", platform: "Swiggy" as const, price: 45, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Britannia%20100%25%20Whole%20Wheat%20Brown%20Bread%20400g", inStock: true },
+  { variantId: "brit_multi_400", platform: "Blinkit" as const, price: 55, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Britannia%20Multigrain%20Bread%20400g", inStock: true },
+  { variantId: "brit_multi_400", platform: "Zepto" as const, price: 56, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Britannia%20Multigrain%20Bread%20400g", inStock: true },
+  { variantId: "brit_multi_400", platform: "Swiggy" as const, price: 55, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Britannia%20Multigrain%20Bread%20400g", inStock: true },
+  { variantId: "hg_white_400", platform: "Blinkit" as const, price: 35, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Harvest%20Gold%20White%20Bread%20400g", inStock: true },
+  { variantId: "hg_white_400", platform: "Zepto" as const, price: 35, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Harvest%20Gold%20White%20Bread%20400g", inStock: true },
+  { variantId: "hg_white_400", platform: "Swiggy" as const, price: 35, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Harvest%20Gold%20White%20Bread%20400g", inStock: true },
+  { variantId: "hg_brown_400", platform: "Blinkit" as const, price: 45, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Harvest%20Gold%20Brown%20Bread%20400g", inStock: true },
+  { variantId: "hg_brown_400", platform: "Zepto" as const, price: 45, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Harvest%20Gold%20Brown%20Bread%20400g", inStock: false },
+  { variantId: "hg_brown_400", platform: "Swiggy" as const, price: 45, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Harvest%20Gold%20Brown%20Bread%20400g", inStock: true },
+  { variantId: "hg_multi_400", platform: "Blinkit" as const, price: 50, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Harvest%20Gold%20Hearty%20Multigrain%20Bread%20400g", inStock: true },
+  { variantId: "hg_multi_400", platform: "Zepto" as const, price: 52, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Harvest%20Gold%20Hearty%20Multigrain%20Bread%20400g", inStock: true },
+  { variantId: "hg_multi_400", platform: "Swiggy" as const, price: 50, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Harvest%20Gold%20Hearty%20Multigrain%20Bread%20400g", inStock: true },
+  { variantId: "eo_white_400", platform: "Blinkit" as const, price: 40, eta: "8 min", deepLink: "https://blinkit.com/s/?q=English%20Oven%20Sandwich%20White%20Bread%20400g", inStock: true },
+  { variantId: "eo_white_400", platform: "Zepto" as const, price: 40, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=English%20Oven%20Sandwich%20White%20Bread%20400g", inStock: true },
+  { variantId: "eo_white_400", platform: "Swiggy" as const, price: 40, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=English%20Oven%20Sandwich%20White%20Bread%20400g", inStock: true },
+  { variantId: "eo_brown_400", platform: "Blinkit" as const, price: 50, eta: "8 min", deepLink: "https://blinkit.com/s/?q=English%20Oven%20100%25%20Atta%20Brown%20Bread%20400g", inStock: true },
+  { variantId: "eo_brown_400", platform: "Zepto" as const, price: 50, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=English%20Oven%20100%25%20Atta%20Brown%20Bread%20400g", inStock: true },
+  { variantId: "eo_brown_400", platform: "Swiggy" as const, price: 50, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=English%20Oven%20100%25%20Atta%20Brown%20Bread%20400g", inStock: true },
+  { variantId: "eo_multi_400", platform: "Blinkit" as const, price: 60, eta: "8 min", deepLink: "https://blinkit.com/s/?q=English%20Oven%20Multigrain%20Bread%20400g", inStock: false },
+  { variantId: "eo_multi_400", platform: "Zepto" as const, price: 62, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=English%20Oven%20Multigrain%20Bread%20400g", inStock: true },
+  { variantId: "eo_multi_400", platform: "Swiggy" as const, price: 60, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=English%20Oven%20Multigrain%20Bread%20400g", inStock: true },
+  { variantId: "egg_white_6", platform: "Blinkit" as const, price: 45, eta: "8 min", deepLink: "https://blinkit.com/s/?q=White%20Farm%20Fresh%20Eggs%206%20pcs", inStock: true },
+  { variantId: "egg_white_6", platform: "Zepto" as const, price: 48, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=White%20Farm%20Fresh%20Eggs%206%20pcs", inStock: true },
+  { variantId: "egg_white_6", platform: "Swiggy" as const, price: 46, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=White%20Farm%20Fresh%20Eggs%206%20pcs", inStock: true },
+  { variantId: "egg_white_10", platform: "Blinkit" as const, price: 75, eta: "8 min", deepLink: "https://blinkit.com/s/?q=White%20Farm%20Fresh%20Eggs%2010%20pcs", inStock: true },
+  { variantId: "egg_white_10", platform: "Zepto" as const, price: 78, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=White%20Farm%20Fresh%20Eggs%2010%20pcs", inStock: true },
+  { variantId: "egg_white_10", platform: "Swiggy" as const, price: 76, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=White%20Farm%20Fresh%20Eggs%2010%20pcs", inStock: true },
+  { variantId: "egg_white_12", platform: "Blinkit" as const, price: 85, eta: "8 min", deepLink: "https://blinkit.com/s/?q=White%20Farm%20Fresh%20Eggs%2012%20pcs", inStock: true },
+  { variantId: "egg_white_12", platform: "Zepto" as const, price: 88, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=White%20Farm%20Fresh%20Eggs%2012%20pcs", inStock: true },
+  { variantId: "egg_white_12", platform: "Swiggy" as const, price: 86, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=White%20Farm%20Fresh%20Eggs%2012%20pcs", inStock: true },
+  { variantId: "egg_white_30", platform: "Blinkit" as const, price: 205, eta: "8 min", deepLink: "https://blinkit.com/s/?q=White%20Farm%20Fresh%20Eggs%2030%20pcs", inStock: true },
+  { variantId: "egg_white_30", platform: "Zepto" as const, price: 210, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=White%20Farm%20Fresh%20Eggs%2030%20pcs", inStock: false },
+  { variantId: "egg_white_30", platform: "Swiggy" as const, price: 208, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=White%20Farm%20Fresh%20Eggs%2030%20pcs", inStock: true },
+  { variantId: "cd_white_6", platform: "Blinkit" as const, price: 65, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Country%20Delight%20Protein%20White%20Eggs%206%20pcs", inStock: true },
+  { variantId: "cd_white_6", platform: "Zepto" as const, price: 68, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Country%20Delight%20Protein%20White%20Eggs%206%20pcs", inStock: true },
+  { variantId: "cd_white_6", platform: "Swiggy" as const, price: 66, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Country%20Delight%20Protein%20White%20Eggs%206%20pcs", inStock: true },
+  { variantId: "cd_brown_6", platform: "Blinkit" as const, price: 85, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Country%20Delight%20Brown%20Eggs%206%20pcs", inStock: true },
+  { variantId: "cd_brown_6", platform: "Zepto" as const, price: 88, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Country%20Delight%20Brown%20Eggs%206%20pcs", inStock: true },
+  { variantId: "cd_brown_6", platform: "Swiggy" as const, price: 86, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Country%20Delight%20Brown%20Eggs%206%20pcs", inStock: true },
+  { variantId: "nandini_6", platform: "Blinkit" as const, price: 40, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Nandini%20Farm%20Fresh%20Eggs%206%20pcs", inStock: true },
+  { variantId: "nandini_6", platform: "Zepto" as const, price: 42, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Nandini%20Farm%20Fresh%20Eggs%206%20pcs", inStock: true },
+  { variantId: "nandini_6", platform: "Swiggy" as const, price: 41, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Nandini%20Farm%20Fresh%20Eggs%206%20pcs", inStock: true },
+  { variantId: "nandini_30", platform: "Blinkit" as const, price: 195, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Nandini%20Farm%20Fresh%20Eggs%2030%20pcs", inStock: false },
+  { variantId: "nandini_30", platform: "Zepto" as const, price: 200, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Nandini%20Farm%20Fresh%20Eggs%2030%20pcs", inStock: true },
+  { variantId: "nandini_30", platform: "Swiggy" as const, price: 198, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Nandini%20Farm%20Fresh%20Eggs%2030%20pcs", inStock: true },
+  { variantId: "amul_butter_100", platform: "Blinkit" as const, price: 58, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Pasteurized%20Salted%20Butter%20100g", inStock: true },
+  { variantId: "amul_butter_100", platform: "Zepto" as const, price: 60, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Pasteurized%20Salted%20Butter%20100g", inStock: true },
+  { variantId: "amul_butter_100", platform: "Swiggy" as const, price: 59, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Pasteurized%20Salted%20Butter%20100g", inStock: true },
+  { variantId: "amul_butter_200", platform: "Blinkit" as const, price: 115, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Pasteurized%20Salted%20Butter%20200g", inStock: true },
+  { variantId: "amul_butter_200", platform: "Zepto" as const, price: 118, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Pasteurized%20Salted%20Butter%20200g", inStock: true },
+  { variantId: "amul_butter_200", platform: "Swiggy" as const, price: 116, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Pasteurized%20Salted%20Butter%20200g", inStock: true },
+  { variantId: "amul_butter_500", platform: "Blinkit" as const, price: 285, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Pasteurized%20Salted%20Butter%20500g", inStock: true },
+  { variantId: "amul_butter_500", platform: "Zepto" as const, price: 290, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Pasteurized%20Salted%20Butter%20500g", inStock: true },
+  { variantId: "amul_butter_500", platform: "Swiggy" as const, price: 288, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Pasteurized%20Salted%20Butter%20500g", inStock: true },
+  { variantId: "amul_unsalted_100", platform: "Blinkit" as const, price: 60, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Unsalted%20Butter%20100g", inStock: true },
+  { variantId: "amul_unsalted_100", platform: "Zepto" as const, price: 62, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Unsalted%20Butter%20100g", inStock: false },
+  { variantId: "amul_unsalted_100", platform: "Swiggy" as const, price: 61, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Unsalted%20Butter%20100g", inStock: true },
+  { variantId: "amul_garlic_100", platform: "Blinkit" as const, price: 65, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Garlic%20%26%20Herbs%20Butter%20100g", inStock: true },
+  { variantId: "amul_garlic_100", platform: "Zepto" as const, price: 68, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Garlic%20%26%20Herbs%20Butter%20100g", inStock: true },
+  { variantId: "amul_garlic_100", platform: "Swiggy" as const, price: 66, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Garlic%20%26%20Herbs%20Butter%20100g", inStock: true },
+  { variantId: "md_butter_100", platform: "Blinkit" as const, price: 56, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Mother%20Dairy%20Classic%20Salted%20Butter%20100g", inStock: true },
+  { variantId: "md_butter_100", platform: "Zepto" as const, price: 58, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Mother%20Dairy%20Classic%20Salted%20Butter%20100g", inStock: true },
+  { variantId: "md_butter_100", platform: "Swiggy" as const, price: 57, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Mother%20Dairy%20Classic%20Salted%20Butter%20100g", inStock: true },
+  { variantId: "md_butter_500", platform: "Blinkit" as const, price: 280, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Mother%20Dairy%20Classic%20Salted%20Butter%20500g", inStock: true },
+  { variantId: "md_butter_500", platform: "Zepto" as const, price: 285, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Mother%20Dairy%20Classic%20Salted%20Butter%20500g", inStock: true },
+  { variantId: "md_butter_500", platform: "Swiggy" as const, price: 282, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Mother%20Dairy%20Classic%20Salted%20Butter%20500g", inStock: true },
+  { variantId: "md_white_butter_100", platform: "Blinkit" as const, price: 58, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Mother%20Dairy%20White%20Unsalted%20Butter%20100g", inStock: false },
+  { variantId: "md_white_butter_100", platform: "Zepto" as const, price: 60, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Mother%20Dairy%20White%20Unsalted%20Butter%20100g", inStock: true },
+  { variantId: "md_white_butter_100", platform: "Swiggy" as const, price: 59, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Mother%20Dairy%20White%20Unsalted%20Butter%20100g", inStock: true },
+  { variantId: "nandini_butter_100", platform: "Blinkit" as const, price: 54, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Nandini%20Pasteurised%20Butter%20100g", inStock: true },
+  { variantId: "nandini_butter_100", platform: "Zepto" as const, price: 56, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Nandini%20Pasteurised%20Butter%20100g", inStock: true },
+  { variantId: "nandini_butter_100", platform: "Swiggy" as const, price: 55, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Nandini%20Pasteurised%20Butter%20100g", inStock: true },
+  { variantId: "nandini_butter_500", platform: "Blinkit" as const, price: 270, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Nandini%20Pasteurised%20Butter%20500g", inStock: true },
+  { variantId: "nandini_butter_500", platform: "Zepto" as const, price: 275, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Nandini%20Pasteurised%20Butter%20500g", inStock: true },
+  { variantId: "nandini_butter_500", platform: "Swiggy" as const, price: 272, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Nandini%20Pasteurised%20Butter%20500g", inStock: false },
+  { variantId: "paneer_200", platform: "Blinkit" as const, price: 90, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Malai%20Paneer%20200g", inStock: true },
+  { variantId: "paneer_200", platform: "Zepto" as const, price: 95, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Malai%20Paneer%20200g", inStock: true },
+  { variantId: "paneer_200", platform: "Swiggy" as const, price: 92, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Malai%20Paneer%20200g", inStock: true },
+  { variantId: "paneer_1kg", platform: "Blinkit" as const, price: 430, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Amul%20Malai%20Paneer%201kg", inStock: true },
+  { variantId: "paneer_1kg", platform: "Zepto" as const, price: 440, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Amul%20Malai%20Paneer%201kg", inStock: false },
+  { variantId: "paneer_1kg", platform: "Swiggy" as const, price: 435, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Amul%20Malai%20Paneer%201kg", inStock: true },
+  { variantId: "banana_6", platform: "Blinkit" as const, price: 35, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Fresh%20Robusta%20Bananas%206%20pcs", inStock: true },
+  { variantId: "banana_6", platform: "Zepto" as const, price: 38, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Fresh%20Robusta%20Bananas%206%20pcs", inStock: true },
+  { variantId: "banana_6", platform: "Swiggy" as const, price: 40, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Fresh%20Robusta%20Bananas%206%20pcs", inStock: true },
+  { variantId: "banana_12", platform: "Blinkit" as const, price: 65, eta: "8 min", deepLink: "https://blinkit.com/s/?q=Fresh%20Robusta%20Bananas%2012%20pcs", inStock: true },
+  { variantId: "banana_12", platform: "Zepto" as const, price: 70, eta: "10 min", deepLink: "https://www.zeptonow.com/search?q=Fresh%20Robusta%20Bananas%2012%20pcs", inStock: true },
+  { variantId: "banana_12", platform: "Swiggy" as const, price: 75, eta: "12 min", deepLink: "https://www.swiggy.com/instamart/search?custom_query=Fresh%20Robusta%20Bananas%2012%20pcs", inStock: false },
+];
+
+// ── Helpers ─────────────────────────────────────────────────────────────
+
+export function findBrands(query: string): Brand[] {
+  const q = query.toLowerCase();
+  return BRANDS.filter((b) => 
+    b.name.toLowerCase().includes(q) || 
+    b.keywords.some((k) => q.includes(k) || k.includes(q))
+  );
+}
+
+export function getVariantsForBrand(brandId: string, sizeHint?: string): (ProductVariant & { listings: PlatformListing[] })[] {
+  const brandVariants = VARIANTS.filter((v) => v.brandId === brandId);
+  const withListings = brandVariants.map((v) => ({
+    ...v,
+    listings: getListings(v.id),
+  }));
+
+  if (sizeHint) {
+    const hint = sizeHint.toLowerCase().replace(/\s+/g, "");
+    withListings.sort((a, b) => {
+      const aSku = a.sku.toLowerCase().replace(/\s+/g, "");
+      const bSku = b.sku.toLowerCase().replace(/\s+/g, "");
+      if (aSku.includes(hint) && !bSku.includes(hint)) return -1;
+      if (!aSku.includes(hint) && bSku.includes(hint)) return 1;
+      return 0;
+    });
+  }
+  return withListings;
+}
+
+export function getListings(variantId: string): PlatformListing[] {
+  return LISTINGS.filter((l) => l.variantId === variantId);
+}

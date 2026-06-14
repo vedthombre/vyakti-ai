@@ -1,0 +1,415 @@
+{
+  "Amul Gold Full Cream Milk 1L": [],
+  "Amul Taaza Toned Milk 1L": [
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 270,
+      "mrp": 310,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-626-799,pr-true,f-auto,q-40,dpr-2/cms/product_variant/e3b424c9-3824-4dc2-b6cf-49972f83208f/Society-Leaf-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea-pouch/pvid/ff93a70a-73bb-4865-8f52-712ad4133d18",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea",
+      "sku": "1 pack (100 g)",
+      "price": 55,
+      "mrp": 60,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1100-1100,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f6045c95-d9d1-48dd-9584-72953280ce07/Society-Leaf-Tea.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea/pvid/4c7440ba-5289-4adc-b08e-da9ab6cc66b8",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Masala Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 340,
+      "mrp": 370,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-800-800,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f0505e05-dd83-4ba8-96e5-50eaf554f08b/Society-Masala-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-masala-tea-pouch/pvid/dabdbc65-6292-4896-8948-8e1c4fa4cae7",
+      "in_stock": true
+    }
+  ],
+  "Amul Taaza Toned Milk 500ml": [
+    {
+      "platform": "Blinkit",
+      "name": "Amul Taaza Toned Milk",
+      "sku": "500 ml",
+      "price": 30,
+      "mrp": 30,
+      "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=360/da/cms-assets/cms/product/5734b087-3ad9-485f-bbe2-52079cd9e35d.png",
+      "deepLink": "",
+      "in_stock": true
+    },
+    {
+      "platform": "Blinkit",
+      "name": "Amul Taaza Toned Milk - Pack of 2",
+      "sku": "2 x 200 ml",
+      "price": 34,
+      "mrp": 34,
+      "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=360/da/cms-assets/cms/product/rc-upload-1778220054937-7565.png",
+      "deepLink": "",
+      "in_stock": true
+    },
+    {
+      "platform": "Blinkit",
+      "name": "Amul Taaza Homogenised Toned Milk",
+      "sku": "1 ltr",
+      "price": 77,
+      "mrp": 77,
+      "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=360/da/cms-assets/cms/product/9a4088cc-db19-4add-b3ce-2edd4d09f4ae.png",
+      "deepLink": "",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 270,
+      "mrp": 310,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-626-799,pr-true,f-auto,q-40,dpr-2/cms/product_variant/e3b424c9-3824-4dc2-b6cf-49972f83208f/Society-Leaf-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea-pouch/pvid/ff93a70a-73bb-4865-8f52-712ad4133d18",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea",
+      "sku": "1 pack (100 g)",
+      "price": 55,
+      "mrp": 60,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1100-1100,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f6045c95-d9d1-48dd-9584-72953280ce07/Society-Leaf-Tea.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea/pvid/4c7440ba-5289-4adc-b08e-da9ab6cc66b8",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Masala Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 340,
+      "mrp": 370,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-800-800,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f0505e05-dd83-4ba8-96e5-50eaf554f08b/Society-Masala-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-masala-tea-pouch/pvid/dabdbc65-6292-4896-8948-8e1c4fa4cae7",
+      "in_stock": true
+    }
+  ],
+  "Gokul Standardised Milk 1L": [
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 270,
+      "mrp": 310,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-626-799,pr-true,f-auto,q-40,dpr-2/cms/product_variant/e3b424c9-3824-4dc2-b6cf-49972f83208f/Society-Leaf-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea-pouch/pvid/ff93a70a-73bb-4865-8f52-712ad4133d18",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea",
+      "sku": "1 pack (100 g)",
+      "price": 55,
+      "mrp": 60,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1100-1100,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f6045c95-d9d1-48dd-9584-72953280ce07/Society-Leaf-Tea.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea/pvid/4c7440ba-5289-4adc-b08e-da9ab6cc66b8",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Masala Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 340,
+      "mrp": 370,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-800-800,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f0505e05-dd83-4ba8-96e5-50eaf554f08b/Society-Masala-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-masala-tea-pouch/pvid/dabdbc65-6292-4896-8948-8e1c4fa4cae7",
+      "in_stock": true
+    }
+  ],
+  "Mother Dairy Full Cream Milk 1L": [
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 270,
+      "mrp": 310,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-626-799,pr-true,f-auto,q-40,dpr-2/cms/product_variant/e3b424c9-3824-4dc2-b6cf-49972f83208f/Society-Leaf-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea-pouch/pvid/ff93a70a-73bb-4865-8f52-712ad4133d18",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea",
+      "sku": "1 pack (100 g)",
+      "price": 55,
+      "mrp": 60,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1100-1100,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f6045c95-d9d1-48dd-9584-72953280ce07/Society-Leaf-Tea.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea/pvid/4c7440ba-5289-4adc-b08e-da9ab6cc66b8",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Masala Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 340,
+      "mrp": 370,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-800-800,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f0505e05-dd83-4ba8-96e5-50eaf554f08b/Society-Masala-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-masala-tea-pouch/pvid/dabdbc65-6292-4896-8948-8e1c4fa4cae7",
+      "in_stock": true
+    }
+  ],
+  "Britannia White Bread 400g": [
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 270,
+      "mrp": 310,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-626-799,pr-true,f-auto,q-40,dpr-2/cms/product_variant/e3b424c9-3824-4dc2-b6cf-49972f83208f/Society-Leaf-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea-pouch/pvid/ff93a70a-73bb-4865-8f52-712ad4133d18",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea",
+      "sku": "1 pack (100 g)",
+      "price": 55,
+      "mrp": 60,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1100-1100,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f6045c95-d9d1-48dd-9584-72953280ce07/Society-Leaf-Tea.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea/pvid/4c7440ba-5289-4adc-b08e-da9ab6cc66b8",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Masala Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 340,
+      "mrp": 370,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-800-800,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f0505e05-dd83-4ba8-96e5-50eaf554f08b/Society-Masala-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-masala-tea-pouch/pvid/dabdbc65-6292-4896-8948-8e1c4fa4cae7",
+      "in_stock": true
+    }
+  ],
+  "Britannia Brown Bread 400g": [
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 270,
+      "mrp": 310,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-626-799,pr-true,f-auto,q-40,dpr-2/cms/product_variant/e3b424c9-3824-4dc2-b6cf-49972f83208f/Society-Leaf-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea-pouch/pvid/ff93a70a-73bb-4865-8f52-712ad4133d18",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea",
+      "sku": "1 pack (100 g)",
+      "price": 55,
+      "mrp": 60,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1100-1100,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f6045c95-d9d1-48dd-9584-72953280ce07/Society-Leaf-Tea.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea/pvid/4c7440ba-5289-4adc-b08e-da9ab6cc66b8",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Masala Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 340,
+      "mrp": 370,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-800-800,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f0505e05-dd83-4ba8-96e5-50eaf554f08b/Society-Masala-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-masala-tea-pouch/pvid/dabdbc65-6292-4896-8948-8e1c4fa4cae7",
+      "in_stock": true
+    }
+  ],
+  "Amul Butter 100g": [
+    {
+      "platform": "Blinkit",
+      "name": "Nutralite DoodhShakti Probiotic Butter",
+      "sku": "100 g",
+      "price": 57,
+      "mrp": 60,
+      "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=360/da/cms-assets/cms/product/124dfc87-32f7-4fdd-a20e-0b8d3601996c.png",
+      "deepLink": "",
+      "in_stock": true
+    },
+    {
+      "platform": "Blinkit",
+      "name": "Amul Salted Butter",
+      "sku": "100 g",
+      "price": 60,
+      "mrp": 60,
+      "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=360/da/cms-assets/cms/product/rc-upload-1781155438653-138.png",
+      "deepLink": "",
+      "in_stock": true
+    },
+    {
+      "platform": "Blinkit",
+      "name": "Amul Garlic & Herbs Butter",
+      "sku": "100 g",
+      "price": 70,
+      "mrp": 70,
+      "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=360/da/cms-assets/cms/product/rc-upload-1781162984814-37.png",
+      "deepLink": "",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 270,
+      "mrp": 310,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-626-799,pr-true,f-auto,q-40,dpr-2/cms/product_variant/e3b424c9-3824-4dc2-b6cf-49972f83208f/Society-Leaf-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea-pouch/pvid/ff93a70a-73bb-4865-8f52-712ad4133d18",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea",
+      "sku": "1 pack (100 g)",
+      "price": 55,
+      "mrp": 60,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1100-1100,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f6045c95-d9d1-48dd-9584-72953280ce07/Society-Leaf-Tea.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea/pvid/4c7440ba-5289-4adc-b08e-da9ab6cc66b8",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Masala Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 340,
+      "mrp": 370,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-800-800,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f0505e05-dd83-4ba8-96e5-50eaf554f08b/Society-Masala-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-masala-tea-pouch/pvid/dabdbc65-6292-4896-8948-8e1c4fa4cae7",
+      "in_stock": true
+    }
+  ],
+  "Farm Fresh Eggs 6": [
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 270,
+      "mrp": 310,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-626-799,pr-true,f-auto,q-40,dpr-2/cms/product_variant/e3b424c9-3824-4dc2-b6cf-49972f83208f/Society-Leaf-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea-pouch/pvid/ff93a70a-73bb-4865-8f52-712ad4133d18",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea",
+      "sku": "1 pack (100 g)",
+      "price": 55,
+      "mrp": 60,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1100-1100,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f6045c95-d9d1-48dd-9584-72953280ce07/Society-Leaf-Tea.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea/pvid/4c7440ba-5289-4adc-b08e-da9ab6cc66b8",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Masala Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 340,
+      "mrp": 370,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-800-800,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f0505e05-dd83-4ba8-96e5-50eaf554f08b/Society-Masala-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-masala-tea-pouch/pvid/dabdbc65-6292-4896-8948-8e1c4fa4cae7",
+      "in_stock": true
+    }
+  ],
+  "Farm Fresh Eggs 12": [
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 270,
+      "mrp": 310,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-626-799,pr-true,f-auto,q-40,dpr-2/cms/product_variant/e3b424c9-3824-4dc2-b6cf-49972f83208f/Society-Leaf-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea-pouch/pvid/ff93a70a-73bb-4865-8f52-712ad4133d18",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea",
+      "sku": "1 pack (100 g)",
+      "price": 55,
+      "mrp": 60,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1100-1100,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f6045c95-d9d1-48dd-9584-72953280ce07/Society-Leaf-Tea.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea/pvid/4c7440ba-5289-4adc-b08e-da9ab6cc66b8",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Masala Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 340,
+      "mrp": 370,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-800-800,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f0505e05-dd83-4ba8-96e5-50eaf554f08b/Society-Masala-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-masala-tea-pouch/pvid/dabdbc65-6292-4896-8948-8e1c4fa4cae7",
+      "in_stock": true
+    }
+  ],
+  "Amul Taaza Toned Milk 2L": [
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 270,
+      "mrp": 310,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-626-799,pr-true,f-auto,q-40,dpr-2/cms/product_variant/e3b424c9-3824-4dc2-b6cf-49972f83208f/Society-Leaf-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea-pouch/pvid/ff93a70a-73bb-4865-8f52-712ad4133d18",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea",
+      "sku": "1 pack (100 g)",
+      "price": 55,
+      "mrp": 60,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1100-1100,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f6045c95-d9d1-48dd-9584-72953280ce07/Society-Leaf-Tea.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea/pvid/4c7440ba-5289-4adc-b08e-da9ab6cc66b8",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Masala Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 340,
+      "mrp": 370,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-800-800,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f0505e05-dd83-4ba8-96e5-50eaf554f08b/Society-Masala-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-masala-tea-pouch/pvid/dabdbc65-6292-4896-8948-8e1c4fa4cae7",
+      "in_stock": true
+    }
+  ],
+  "Amul Gold Full Cream Milk 500ml": [
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 270,
+      "mrp": 310,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-626-799,pr-true,f-auto,q-40,dpr-2/cms/product_variant/e3b424c9-3824-4dc2-b6cf-49972f83208f/Society-Leaf-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea-pouch/pvid/ff93a70a-73bb-4865-8f52-712ad4133d18",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Leaf Tea",
+      "sku": "1 pack (100 g)",
+      "price": 55,
+      "mrp": 60,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-1100-1100,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f6045c95-d9d1-48dd-9584-72953280ce07/Society-Leaf-Tea.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-leaf-tea/pvid/4c7440ba-5289-4adc-b08e-da9ab6cc66b8",
+      "in_stock": true
+    },
+    {
+      "platform": "Zepto",
+      "name": "Society Masala Tea Pouch",
+      "sku": "1 pack (500 g)",
+      "price": 340,
+      "mrp": 370,
+      "image_url": "https://cdn.zeptonow.com/production/ik-seo/tr:w-403,ar-800-800,pr-true,f-auto,q-40,dpr-2/cms/product_variant/f0505e05-dd83-4ba8-96e5-50eaf554f08b/Society-Masala-Tea-Pouch.jpeg",
+      "deepLink": "https://www.zepto.com/pn/society-masala-tea-pouch/pvid/dabdbc65-6292-4896-8948-8e1c4fa4cae7",
+      "in_stock": true
+    }
+  ]
+}

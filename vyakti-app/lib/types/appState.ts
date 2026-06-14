@@ -11,7 +11,9 @@ export type AppState =
   | "RECORDING"
   | "TRANSCRIBING"
   | "THINKING"
-  | "CLARIFY_CATEGORY"
+  | "CLARIFY_INTENT"
+  | "CLARIFY_BRAND"
   | "CLARIFY_VARIANT"
+  | "CLARIFY_CATEGORY"
   | "READY_TO_PAY"
   | "ERROR";
