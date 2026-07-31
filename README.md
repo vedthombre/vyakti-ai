@@ -1,77 +1,89 @@
-Vyakti (व्यक्ति)
+# Vyakti
 
-The Voice-to-Action Agent for Indian Commerce
-"Bol, Order Ho Jaaye"
+Vyakti (व्यक्ति) is a voice-first commerce agent for Indian quick commerce. It turns natural language into action across the app stack, with a focus on fast intent parsing, routed search, and a Swiggy MCP client architecture.
 
-Vyakti is a production-grade Large Action Model (LAM) designed to bridge the "Action Gap" in current AI. While traditional assistants can only recommend or search, Vyakti executes—turning a natural voice command into a completed transaction across the ONDC network and UPI rails.
+## What’s in this repo
 
-⚡ The Core Problem: The 8-Minute Friction Trap
-In India’s hyper-competitive delivery market, ordering a single item (like bread) is an ordeal:
+This repository currently contains two app surfaces:
 
-Fragmentation: Users manually switch between 3-4 apps (Blinkit, Zepto, Swiggy) to compare availability and price.
+- `vyakti-app` - the main Next.js application
+- `vyakti-ai-frontend` - a separate frontend workspace for the AI experience
 
-Fatigue: The journey from "intent" to "confirmation" involves 15+ clicks, multiple scrolls, and repetitive address selection.
+The main implementation work today lives in `vyakti-app`.
 
-The Gap: AI has been "Read-Only" for too long.
+## Highlights
 
-Vyakti reduces this journey from 8 minutes of manual navigation to 30 seconds of voice interaction.
+- Voice input and intent parsing for shopping requests
+- Marketplace routing across Blinkit, Zepto, and Swiggy
+- A dedicated Swiggy MCP client layer with private auth, transport, and tool internals
+- Mock catalog and scraper-backed search flows for local development
+- Next.js App Router architecture with TypeScript throughout
 
-🚀 The Solution: Manifested Agency
-Vyakti (meaning "Manifested Entity") acts as a digital agent that "sees" the open market through the ONDC (Open Network for Digital Commerce) protocol.
+## Swiggy MCP Architecture
 
-The User Journey
-Command: "Hey Vyakti, order my usual whole wheat bread."
+The Swiggy layer is organized so that `client.ts` is the only public entry point.
 
-Search: Agent broadcasts a search to the ONDC Gateway, aggregating real-time prices from all local sellers.
+Dependency direction:
 
-Reason: Agent identifies the best deal (Price vs. Delivery Time) and applies user preferences.
+`SwiggyClient` → `Tools` → `Transport` → `Auth`
 
-Pay: Agent generates a UPI Intent link. The user's phone pops open GPay/PhonePe automatically.
+Internal folders remain implementation details:
 
-Confirm: User enters PIN. Transaction complete.
+- `lib/swiggy/auth`
+- `lib/swiggy/transport`
+- `lib/swiggy/tools`
 
-🛠️ Technical Architecture
-Vyakti is built on a Stateful Multi-Agent Framework to ensure reliability in the asynchronous world of decentralized commerce.
+## Project Layout
 
-The Engineering Stack
-Orchestration: LangGraph (State machines to handle "Wait-and-Listen" ONDC callbacks).
+```text
+vyakti-ai/
+├── README.md
+├── vyakti-app/
+│   ├── app/
+│   ├── components/
+│   ├── lib/
+│   │   ├── marketplace/
+│   │   ├── mock/
+│   │   ├── scraper/
+│   │   ├── stt/
+│   │   └── swiggy/
+│   └── package.json
+└── vyakti-ai-frontend/
+    └── src/
+```
 
-Intelligence: Claude 3.5 Sonnet / GPT-4o for intent extraction and reasoning.
+## Getting Started
 
-Voice Engine: Groq Whisper-v3 (Achieving <200ms transcription latency for near-instant response).
+### Prerequisites
 
-Protocol: Beckn (ONDC Retail) for decentralized discovery.
+- Node.js 18 or later
+- npm, pnpm, or bun
 
-Payments: Razorpay / UPI Deep-Linking (Non-custodial, secure handoff).
+### Run the main app
 
-Backend: Next.js 14 (App Router) + Supabase (Persistent user commerce patterns).
+```bash
+cd vyakti-app
+npm install
+npm run dev
+```
 
-Why this is "Principal Engineer" Grade:
-Non-Blocking Async Webhooks: Unlike simple wrappers, Vyakti manages asynchronous on_search and on_init responses from multiple sellers simultaneously.
+### Build for production
 
-Pattern Learning: The system doesn't just "forget." It stores user habits in a vector-enhanced Postgres database to enable "the usual" commands.
+```bash
+cd vyakti-app
+npm run build
+```
 
-Latency Optimization: By moving transcription to the edge (Groq), the agent feels like a real-time conversation rather than a "processing" bot.
+## Environment Variables
 
-📊 Engineering Highlights
-Metric	Standard App Journey	Vyakti (Agentic)
-Time-to-Checkout	~8 Minutes	~30 Seconds
-Cognitive Load	High (Compare 4 apps)	Zero (AI Aggregation)
-Latency	Network dependent	200ms Voice Auth
-Network Reach	Walled Garden (1 App)	ONDC (All Local Sellers)
-🛡️ Security & Ethics
-Vyakti follows the "Initiate, Don't Authorize" principle.
+The app uses environment variables for connected services such as auth, voice, and scraping providers. Refer to `vyakti-app/.env.local` or the app documentation for the exact keys required in your setup.
 
-The Agent handles the complexity of discovery, carting, and gateway navigation.
+## Development Notes
 
-The User remains the final gatekeeper for the funds, authorizing the transaction via their native UPI app’s 2FA. This ensures 100% legal compliance and user trust.
+- The repository is TypeScript-first.
+- The Swiggy client layer was designed to avoid direct imports from marketplace, mock, or scraper modules.
+- `vyakti-app` currently builds successfully with TypeScript checks passing.
 
+## License
 
-💡 How to Get Started
-Clone & Install: npm install
-
-Keys Required: Groq (Whisper), Razorpay (Test), ONDC Sandbox Credentials.
-
-Run: npm run dev
-
-Built by [Your Name] Developing the next generation of Indian Digital Public Infrastructure.
+See the repository for license details if present.
