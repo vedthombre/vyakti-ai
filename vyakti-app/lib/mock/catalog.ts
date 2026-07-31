@@ -1,29 +1,12 @@
 // Auto-generated from vyakti_mock_ecommerce_db.js
+//
+// Types are defined in lib/marketplace/types.ts and re-exported here
+// so all existing importers (page.tsx, MarketplaceSurface, merchantSearch)
+// continue to work without any import-path changes.
 
-export type Brand = {
-  id: string;
-  name: string;
-  emoji: string;
-  keywords: string[];
-};
+import type { Brand, ProductVariant, PlatformListing } from "@/lib/marketplace/types";
+export type { Brand, ProductVariant, PlatformListing } from "@/lib/marketplace/types";
 
-export type ProductVariant = {
-  id: string;
-  brandId: string;
-  name: string;
-  sku: string;
-  image: string;
-  searchKeywords: string[];
-};
-
-export type PlatformListing = {
-  variantId: string;
-  platform: "Blinkit" | "Zepto" | "Swiggy";
-  price: number;
-  eta: string;
-  deepLink: string;
-  inStock: boolean;
-};
 
 export const BRANDS: Brand[] = [
   { id: "milk_amul_full_cream", name: "Amul Full Cream", emoji: "🥛", keywords: ["amul","full","cream","dairy","milk"] },

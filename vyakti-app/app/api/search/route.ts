@@ -3,17 +3,15 @@
  *
  * Unified product search endpoint.
  * - Accepts { query, variantId? } in the POST body.
- * - Scrapes Blinkit, Zepto, Swiggy concurrently via Firecrawl.
- * - Falls back to catalog mock if scraping yields nothing.
+ * - Delegates to the MarketplaceAggregator which fans out to all providers.
  * - Returns ranked listings ready for the MarketplaceSurface UI.
+ *
+ * This route is intentionally thin — no marketplace logic lives here.
+ * All provider-specific behaviour belongs in lib/marketplace/providers/.
  */
 
 import { NextResponse } from "next/server";
-import {
-  searchProductAcrossMerchants,
-  rankByPlatformCheapest,
-  relevanceScore,
-} from "@/lib/scraper/merchantSearch";
+import { defaultAggregator } from "@/lib/marketplace/aggregator";
 
 // Edge runtime not possible here because node-cache uses Node.js
 export const runtime = "nodejs";
@@ -30,20 +28,10 @@ export async function POST(req: Request) {
 
     console.log(`[/api/search] Query="${query}" variantId="${variantId ?? "none"}"`);
 
-    // ── 1. Scrape (or cache / fallback) ────────────────────────────────────
-    const searchResult = await searchProductAcrossMerchants(query, variantId);
+    // ── Delegate entirely to the Aggregator ──────────────────────────────────
+    const searchResult = await defaultAggregator.search(query, variantId);
 
-    // ── 2. Filter by relevance (remove totally unrelated results) ──────────
-    const relevant = searchResult.products.filter(
-      (p) => relevanceScore(p.name, query) >= 0.4
-    );
-
-    // ── 3. Rank: one best listing per platform, cheapest first ──────────────
-    const listings = rankByPlatformCheapest(
-      relevant.length > 0 ? relevant : searchResult.products
-    );
-
-    if (listings.length === 0) {
+    if (searchResult.products.length === 0) {
       return NextResponse.json({
         success: false,
         source: searchResult.source,
@@ -51,13 +39,15 @@ export async function POST(req: Request) {
       });
     }
 
-    console.log(`[/api/search] Returning ${listings.length} listings (source: ${searchResult.source})`);
+    console.log(
+      `[/api/search] Returning ${searchResult.products.length} listings (source: ${searchResult.source})`
+    );
 
     return NextResponse.json({
       success: true,
-      source: searchResult.source,     // "live" | "cache" | "fallback"
+      source:    searchResult.source,   // "live" | "cache" | "fallback"
       query,
-      listings,
+      listings:  searchResult.products,
       scrapedAt: searchResult.scrapedAt,
     });
 

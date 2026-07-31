@@ -69,32 +69,6 @@ export default function AgentPage() {
     setErrorMsg(null);
   }, []);
 
-  // ── After intent parsed → show brands ────────────────────────────────
-  const finalizeIntent = useCallback(async (resolvedIntent: Intent) => {
-    setCotSteps([]);
-    setAppState("THINKING");
-
-    await dripSteps(resolvedIntent.steps ?? [], (step) => {
-      setCotSteps((prev) => [...prev, step]);
-    });
-
-    setIntent(resolvedIntent);
-
-    if (resolvedIntent.routing === "UNKNOWN") {
-      setAppState("CLARIFY_INTENT");
-      return;
-    }
-
-    const foundBrands = findBrands(resolvedIntent.item_name || "");
-    if (foundBrands && foundBrands.length > 0) {
-      setBrands(foundBrands);
-      setAppState("CLARIFY_BRAND");
-    } else {
-      setErrorMsg(`Could not find "${resolvedIntent.item_name}" in our catalog.`);
-      setAppState("ERROR");
-    }
-  }, []);
-
   // ── User selected a brand → show variants ───────────────────────────
   const handleBrandSelect = useCallback((brand: Brand) => {
     setSelectedBrand(brand);
@@ -104,6 +78,47 @@ export default function AgentPage() {
     setVariants(brandVariants);
     setAppState("CLARIFY_VARIANT");
   }, [transcript]);
+
+  // ── After intent parsed → show brands (or skip if brand already known) ────
+  const finalizeIntent = useCallback(async (resolvedIntent: Intent) => {
+    setCotSteps([]);
+    setAppState("THINKING");
+
+    await dripSteps(resolvedIntent.steps ?? [], (step) => {
+      setCotSteps((prev) => [...prev, step]);
+    });
+
+    setIntent(resolvedIntent);
+    console.log("Resolved Intent:", resolvedIntent);
+
+    if (resolvedIntent.routing === "UNKNOWN") {
+      setAppState("CLARIFY_INTENT");
+      return;
+    }
+
+    const foundBrands = findBrands(resolvedIntent.item_name || "");
+
+    if (!foundBrands || foundBrands.length === 0) {
+      setErrorMsg(`Could not find "${resolvedIntent.item_name}" in our catalog.`);
+      setAppState("ERROR");
+      return;
+    }
+
+    // If the user already stated a brand preference, try to skip the brand screen.
+    if (resolvedIntent.brand_preference) {
+      const matchedBrand = foundBrands.find(
+        (b) => b.name.toLowerCase() === resolvedIntent.brand_preference!.toLowerCase()
+      );
+      if (matchedBrand) {
+        handleBrandSelect(matchedBrand);
+        return;
+      }
+    }
+
+    // No preference stated (or preference didn't match any known brand) → ask.
+    setBrands(foundBrands);
+    setAppState("CLARIFY_BRAND");
+  }, [handleBrandSelect]);
 
   // ── User selected a variant → live search then show price comparison ──
   const handleVariantSelect = useCallback(async (variant: ProductVariant) => {
