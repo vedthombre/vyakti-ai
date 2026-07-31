@@ -1,56 +1,69 @@
+```md
 # Vyakti
 
-Vyakti (व्यक्ति) is a voice-first commerce agent for Indian quick commerce. It turns natural language into action across the app stack, with a focus on fast intent parsing, routed search, and a Swiggy MCP client architecture.
+Vyakti (व्यक्ति) is a voice-first commerce assistant for Indian quick commerce. It turns spoken intent into actionable shopping flows across search, routing, and checkout, with a modular architecture spanning voice, intent parsing, marketplace aggregation, and Swiggy MCP integration.
 
-## What’s in this repo
+## What this project does
 
-This repository currently contains two app surfaces:
+Vyakti is designed to reduce the friction of shopping across quick-commerce apps by letting users:
+
+- speak a request naturally
+- transcribe speech to text
+- extract structured intent
+- route the request to the right commerce source
+- compare or surface products
+- move toward checkout with minimal interaction
+
+The project combines a modern Next.js app with supporting commerce and marketplace modules, plus a separate frontend workspace for the AI experience.
+
+## Repository Layout
+
+This repo currently contains two main app surfaces:
 
 - `vyakti-app` - the main Next.js application
 - `vyakti-ai-frontend` - a separate frontend workspace for the AI experience
 
-The main implementation work today lives in `vyakti-app`.
+The main product implementation lives in `vyakti-app`.
 
-## Highlights
+## Key Features
 
-- Voice input and intent parsing for shopping requests
+- Voice input and transcription pipeline
+- Intent parsing for shopping commands
 - Marketplace routing across Blinkit, Zepto, and Swiggy
-- A dedicated Swiggy MCP client layer with private auth, transport, and tool internals
-- Mock catalog and scraper-backed search flows for local development
-- Next.js App Router architecture with TypeScript throughout
+- Aggregated product search and ranking
+- Swiggy MCP client architecture with a single public entry point
+- Mock catalog and scraper-backed data for development
+- Modular TypeScript codebase
+- Next.js App Router based UI and API surface
 
-## Swiggy MCP Architecture
+## Architecture Overview
 
-The Swiggy layer is organized so that `client.ts` is the only public entry point.
+Vyakti is organized around a layered flow:
 
-Dependency direction:
+1. Voice is captured and transcribed.
+2. Text is converted into structured intent.
+3. The intent is routed to the appropriate commerce path.
+4. Marketplace results are aggregated or fetched.
+5. The user can review and continue to checkout.
+
+### Main Modules
+
+- `app/` - Next.js routes, pages, and API endpoints
+- `components/` - shared UI components
+- `lib/agent/` - intent parsing logic
+- `lib/marketplace/` - marketplace abstraction and provider implementations
+- `lib/mock/` - local mock catalog and offline development data
+- `lib/scraper/` - search and catalog scraping helpers
+- `lib/stt/` - speech-to-text provider integration
+- `lib/swiggy/` - Swiggy MCP client architecture
+
+## Swiggy Integration
+
+The Swiggy integration is implemented as a private client layer with this dependency direction:
 
 `SwiggyClient` → `Tools` → `Transport` → `Auth`
 
-Internal folders remain implementation details:
-
-- `lib/swiggy/auth`
-- `lib/swiggy/transport`
-- `lib/swiggy/tools`
-
-## Project Layout
-
-```text
-vyakti-ai/
-├── README.md
-├── vyakti-app/
-│   ├── app/
-│   ├── components/
-│   ├── lib/
-│   │   ├── marketplace/
-│   │   ├── mock/
-│   │   ├── scraper/
-│   │   ├── stt/
-│   │   └── swiggy/
-│   └── package.json
-└── vyakti-ai-frontend/
-    └── src/
-```
+Only `lib/swiggy/client.ts` is meant to be imported by the rest of the app. The internal folders remain implementation details.
 
 ## Getting Started
 
@@ -59,11 +72,17 @@ vyakti-ai/
 - Node.js 18 or later
 - npm, pnpm, or bun
 
-### Run the main app
+### Install dependencies
 
 ```bash
 cd vyakti-app
 npm install
+```
+
+### Run the main app
+
+```bash
+cd vyakti-app
 npm run dev
 ```
 
@@ -76,14 +95,67 @@ npm run build
 
 ## Environment Variables
 
-The app uses environment variables for connected services such as auth, voice, and scraping providers. Refer to `vyakti-app/.env.local` or the app documentation for the exact keys required in your setup.
+The app uses environment variables for voice, auth, scraping, and commerce integrations. Exact values depend on your deployment, but the project typically expects configuration for:
+
+```env
+GROQ_API_KEY=
+SARVAM_API_KEY=
+FIRECRAWL_API_KEY=
+AUTH_GOOGLE_ID=
+AUTH_GOOGLE_SECRET=
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+```
+
+If you are working on the full production stack, also configure any Swiggy, ONDC, or payment-related credentials used by your deployment.
+
+## Project Structure
+
+```text
+vyakti-ai/
+├── README.md
+├── vyakti-app/
+│   ├── app/
+│   │   ├── api/
+│   │   ├── auth/
+│   │   └── preferences/
+│   ├── components/
+│   ├── lib/
+│   │   ├── agent/
+│   │   ├── auth/
+│   │   ├── marketplace/
+│   │   ├── mock/
+│   │   ├── scraper/
+│   │   ├── stt/
+│   │   └── swiggy/
+│   ├── public/
+│   └── scripts/
+└── vyakti-ai-frontend/
+    └── src/
+```
 
 ## Development Notes
 
 - The repository is TypeScript-first.
-- The Swiggy client layer was designed to avoid direct imports from marketplace, mock, or scraper modules.
-- `vyakti-app` currently builds successfully with TypeScript checks passing.
+- The main app is built with Next.js App Router.
+- Marketplace behavior is abstracted so provider logic stays isolated.
+- Swiggy MCP is intentionally encapsulated behind a single public client.
+- The project supports both live integrations and development-time mock data.
 
-## License
+## Scripts
 
-See the repository for license details if present.
+Inside `vyakti-app`:
+
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
+
+## Status
+
+The codebase is actively evolving and includes both production-oriented modules and development stubs where needed for local iteration.
+
