@@ -1,57 +1,55 @@
 /**
  * lib/swiggy/transport/rpc.ts
  *
- * JSON-RPC 2.0 wrapper over the HTTP transport.
- * Formats requests to match the MCP specification and parses responses.
+ * Generic MCP RPC facade over the SDK-backed transport.
+ * No tool-specific parsing or protocol interpretation lives here.
  */
 
-import type { McpRequest, McpResponse } from "../types";
 import { HttpTransport } from "./http";
 
-export class RpcClient {
-  private http: HttpTransport;
-  private idCounter = 1;
+export type McpListToolsResult = import("./http").McpListToolsResult;
+export type McpToolCallResult = import("./http").McpToolCallResult;
 
-  constructor(http: HttpTransport) {
-    this.http = http;
+export class RpcClient {
+  private readonly transport: HttpTransport;
+
+  constructor(transport: HttpTransport) {
+    this.transport = transport;
   }
 
   /**
-   * Executes a JSON-RPC method.
+   * Connects the underlying MCP transport.
    */
-  async call<TResult, TParams = Record<string, unknown>>(
-    method: string,
-    params?: TParams
-  ): Promise<TResult> {
-    const requestId = this.idCounter++;
-    
-    const request: McpRequest<TParams> = {
-      jsonrpc: "2.0",
-      id: requestId,
-      method,
-      params,
-    };
+  async connect(): Promise<void> {
+    await this.transport.connect();
+  }
 
-    console.log(`[Swiggy/Transport/RPC] Requesting method: ${method}`);
+  /**
+   * Disconnects from the MCP server.
+   */
+  async disconnect(): Promise<void> {
+    await this.transport.disconnect();
+  }
 
-    const response = await this.http.post<McpResponse<TResult>>("/rpc", request);
+  /**
+   * Lists the tools exposed by the remote MCP server.
+   */
+  async listTools(): Promise<McpListToolsResult> {
+    return await this.transport.listTools();
+  }
 
-    if (response.jsonrpc !== "2.0") {
-      throw new Error(`[Swiggy/Transport/RPC] Invalid JSON-RPC version for method ${method}.`);
-    }
+  /**
+   * Calls any MCP tool and returns the raw SDK response unchanged.
+   */
+  async callTool(name: string, argumentsObject: Record<string, unknown> = {}): Promise<McpToolCallResult> {
+    return await this.transport.callTool(name, argumentsObject);
+  }
 
-    if (response.id !== requestId) {
-      throw new Error(`[Swiggy/Transport/RPC] Response id mismatch for method ${method}.`);
-    }
-
-    if (response.error) {
-      throw new Error(`[Swiggy/Transport/RPC] Error ${response.error.code}: ${response.error.message}`);
-    }
-
-    if (!Object.prototype.hasOwnProperty.call(response, "result")) {
-      throw new Error(`[Swiggy/Transport/RPC] Missing result for method ${method}.`);
-    }
-
-    return response.result as TResult;
+  /**
+   * Backwards-compatible generic call wrapper.
+   * The returned value is the raw MCP response cast to the requested type.
+   */
+  async call<TResult, TParams = Record<string, unknown>>(method: string, params?: TParams): Promise<TResult> {
+    return (await this.callTool(method, (params ?? {}) as Record<string, unknown>)) as TResult;
   }
 }

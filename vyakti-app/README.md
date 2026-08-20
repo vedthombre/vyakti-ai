@@ -1,15 +1,15 @@
 <div align="center">
 
 # *VYAKTI*
-### व्यक्ति — Swiggy MCP Client for Instamart
+### व्यक्ति — Agentic Commerce Comparison Engine
 
-**A modular MCP-first commerce client for Swiggy Instamart, built on the official Model Context Protocol SDK.**
+**A modular commerce assistant that compares three platforms and recommends the best one, with Swiggy MCP included as one integrated source.**
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.1-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![MCP SDK](https://img.shields.io/badge/MCP%20SDK-%40modelcontextprotocol%2Fsdk-2f855a?style=for-the-badge)](https://www.npmjs.com/package/@modelcontextprotocol/sdk)
 [![OAuth 2.1](https://img.shields.io/badge/OAuth-2.1%20%2B%20PKCE-2b6cb0?style=for-the-badge)](https://www.oauth.com/oauth2-servers/authorization/the-authorization-request/)
-[![Swiggy](https://img.shields.io/badge/Swiggy-Instamart-ff6f00?style=for-the-badge)](https://www.swiggy.com/instamart)
+[![Swiggy MCP](https://img.shields.io/badge/Swiggy-MCP%20Integration-ff6f00?style=for-the-badge)](https://mcp.swiggy.com/builders/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 [Live Demo](#) · [Report Bug](https://github.com/vedthombre/vyakti-ai/issues) · [Request Feature](https://github.com/vedthombre/vyakti-ai/issues)
@@ -20,16 +20,16 @@
 
 ## What is Vyakti?
 
-Vyakti (व्यक्ति) is Sanskrit for **"a person" or "the manifestation of something"**. In this repo, it represents a focused MCP client for Swiggy Instamart — the idea that a user's intent should be translated into authenticated MCP tool calls with minimal transport code.
+Vyakti (व्यक्ति) is Sanskrit for **"a person" or "the manifestation of something"**. In this repo, it represents an agentic commerce engine that compares three different platforms and recommends the best one for the user.
 
-> "Connect once, authenticate cleanly, call tools directly."
+> "Compare clearly, choose smartly, and only then execute."
 
-Vyakti is a **Swiggy MCP integration layer** that lets the app:
+Vyakti is a **platform-comparison layer** that lets the app:
 
-1. Authenticate through the existing OAuth 2.1 + PKCE flow.
-2. Connect to Swiggy's MCP endpoint using the official `@modelcontextprotocol/sdk`.
-3. Discover and call MCP tools without hand-writing JSON-RPC.
-4. Keep transport generic so tool wrappers can evolve independently.
+1. Compare products, prices, and availability across three commerce platforms.
+2. Use the best available connector for each platform, including Swiggy MCP where supported.
+3. Rank the options using business rules and the user’s intent.
+4. Preserve a modular architecture so each platform integration stays isolated.
 
 ---
 
@@ -37,14 +37,14 @@ Vyakti is a **Swiggy MCP integration layer** that lets the app:
 
 | Feature | Description |
 |---|---|
+| 🏆 **Best-Platform Ranking** | Compares three platforms and selects the strongest match for the user |
+| 🔀 **Multi-Source Aggregation** | Pulls data from multiple commerce connectors instead of one locked-in provider |
+| 🧩 **Official MCP SDK** | Uses `@modelcontextprotocol/sdk` for the Swiggy MCP integration path |
 | 🔐 **OAuth Layer** | PKCE-based auth with persistent verifier and token storage abstraction |
-| 🧩 **Official MCP SDK** | Uses `@modelcontextprotocol/sdk` for client lifecycle and tool execution |
 | 🔄 **Generic Transport** | Transport stays tool-agnostic and returns raw MCP responses unchanged |
-| 📡 **Connection Lifecycle** | `connect()` and `disconnect()` are handled inside the transport layer |
 | 🧰 **Tool Discovery** | `listTools()` is available for server introspection without custom protocol code |
-| 📍 **First Working Tool** | `getAddresses()` proves authenticated MCP tool execution end to end |
-| 🧪 **Testable Boundaries** | Auth, transport, and tool wrappers are modular and independently replaceable |
-| 🏗️ **Architecture Preserved** | Marketplace, provider, and UI layers stay untouched while MCP evolves |
+| 📍 **Swiggy Proof Point** | `getAddresses()` proves authenticated MCP tool execution end to end |
+| 🧪 **Testable Boundaries** | Auth, transport, tools, and comparison logic stay modular and replaceable |
 
 ---
 
@@ -52,24 +52,22 @@ Vyakti is a **Swiggy MCP integration layer** that lets the app:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     SwiggyClient API                        │
+│                     Vyakti Comparison Layer                 │
 │                                                             │
-│   getAuthorizationUrl()                                     │
-│   handleCallbackCode()                                      │
-│   getAddresses()                                            │
-│   listTools()                                               │
-│   searchProducts() / addToCart() / checkout()              │
+│   Compare intent across three platforms                     │
+│   Rank the best option                                       │
+│   Orchestrate platform-specific tool calls                  │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
           │                              │
           ▼                              ▼
   ┌───────────────┐             ┌────────────────────┐
-  │  Tool Layer   │             │   SDK Transport    │
+  │ Comparison     │             │   SDK Transport    │
   │               │             │                    │
-  │  Addresses    │             │  Streamable HTTP   │
-  │  Search       │             │  connect/disconnect│
-  │  Cart         │             │  raw MCP responses │
-  │  Checkout     │             │  raw MCP responses │
+  │  Rankers      │             │  Streamable HTTP   │
+  │  Platform A   │             │  connect/disconnect│
+  │  Platform B   │             │  listTools/callTool│
+  │  Swiggy MCP   │             │  raw MCP responses │
   └───────────────┘             └────────────────────┘
                                         │
                                         ▼
@@ -89,7 +87,7 @@ UNAUTHENTICATED ──[getAuthorizationUrl]──► AUTH_URL_READY
         │                                     │
         │                                     └──[handleCallbackCode]
         ▼
-   TOKEN_STORED ──[connect]──► MCP_CONNECTED ──[callTool/listTools]──► TOOL_RESULT
+   TOKEN_STORED ──[connect]──► CONNECTED ──[callTool/listTools]──► TOOL_RESULT
         │                                     │
         └──────────────[401 / expired token]──┘
                                               │
@@ -111,6 +109,7 @@ vyakti-app/
 │   └── page.tsx                # Existing app shell
 │
 ├── lib/
+│   ├── comparison/            # Platform comparison and ranking logic
 │   ├── swiggy/
 │   │   ├── auth/
 │   │   │   ├── pkce.ts         # PKCE generation
@@ -172,7 +171,7 @@ void
 ---
 
 ### `SwiggyClient.getAddresses()`
-Calls the first verified MCP tool, `get_addresses`, and returns the raw SDK response.
+Calls the first verified Swiggy MCP tool, `get_addresses`, and returns the raw SDK response.
 
 **Request:**
 ```json
@@ -191,21 +190,21 @@ Calls the first verified MCP tool, `get_addresses`, and returns the raw SDK resp
 ---
 
 ### `SwiggyClient.searchProducts(query)`
-Planned wrapper for MCP search tools.
+Planned wrapper for search across the three-platform comparison layer.
 
 **Status:** Not yet wired to a real MCP tool.
 
 ---
 
 ### `SwiggyClient.addToCart(item)`
-Planned wrapper for MCP cart tools.
+Planned wrapper for platform-specific cart actions after a winner is chosen.
 
 **Status:** Not yet wired to a real MCP tool.
 
 ---
 
 ### `SwiggyClient.checkout(cart)`
-Planned wrapper for MCP checkout tools.
+Planned wrapper for the final purchase path after comparison.
 
 **Status:** Not yet wired to a real MCP tool.
 
@@ -281,11 +280,11 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 Once the app is running:
 
-1. Call `await swiggyClient.getAuthorizationUrl()` and complete the Swiggy login flow.
-2. Pass the callback code into `await swiggyClient.handleCallbackCode(code)`.
-3. Call `await swiggyClient.getAddresses()` to verify the first end-to-end MCP tool invocation.
-4. Use `await swiggyClient.listTools()` if you need to inspect the remote tool catalog.
-5. Keep search, cart, and checkout disabled until their MCP wrappers are explicitly added.
+1. Use the comparison layer to evaluate three candidate platforms for the same user request.
+2. Call the Swiggy MCP auth flow when Swiggy is one of the platforms being compared.
+3. Call `await swiggyClient.getAddresses()` to verify the Swiggy MCP integration path.
+4. Use `await swiggyClient.listTools()` if you need to inspect the remote Swiggy tool catalog.
+5. Keep platform-specific parsing and ranking logic outside the transport layer.
 
 > 💡 This milestone validates the MCP SDK, the OAuth integration, and the transport lifecycle without coupling the transport to any specific tool schema.
 
@@ -294,6 +293,8 @@ Once the app is running:
 ## 🛣️ Roadmap
 
 ### MVP (Current — v0.1)
+- [x] Three-platform comparison focus
+- [x] Swiggy MCP integrated as one source
 - [x] OAuth 2.1 + PKCE auth layer
 - [x] Official MCP SDK integration
 - [x] Streamable HTTP connection lifecycle
@@ -302,16 +303,17 @@ Once the app is running:
 - [x] Public `SwiggyClient` API preserved
 
 ### Phase 2
+- [ ] Add the other two platform connectors
 - [ ] `search_products` MCP wrapper
-- [ ] Cart and checkout MCP wrappers
+- [ ] Cart and checkout wrappers where applicable
 - [ ] Tool result shaping in the tool layer
 - [ ] Better session persistence for auth state
 - [ ] Remote tool discovery caching
 
 ### Phase 3
 - [ ] Provider-level integration
-- [ ] Marketplace consumption of Swiggy MCP responses
-- [ ] UI surfaces for authenticated Instamart flows
+- [ ] Marketplace consumption of multi-platform comparison results
+- [ ] UI surfaces for ranked platform recommendations
 - [ ] Optional voice or intent entry points if still needed
 
 ---
@@ -322,11 +324,11 @@ Once the app is running:
 |---|---|---|
 | **Framework** | Next.js 16 (App Router) | Existing app shell and server/client surfaces |
 | **Language** | TypeScript 5 | End-to-end type safety |
-| **MCP Client** | `@modelcontextprotocol/sdk` | Official MCP connection and tool execution |
+| **MCP Client** | `@modelcontextprotocol/sdk` | Official MCP connection and Swiggy tool execution |
 | **Auth** | OAuth 2.1 + PKCE | Swiggy authentication and token lifecycle |
 | **Transport** | Streamable HTTP | Remote MCP session transport |
 | **Schema** | Zod | SDK peer dependency and runtime validation support |
-| **Architecture** | Modular Swiggy client | Keeps auth, transport, tools, and consumers separate |
+| **Architecture** | Modular comparison client | Keeps auth, transport, tools, and consumers separate |
 
 ---
 
@@ -337,8 +339,9 @@ Contributions are welcome. For this codebase, keep changes aligned with the MCP-
 1. Fork the repo
 2. Create a feature branch: `git checkout -b feat/your-feature`
 3. Keep transport generic and tool-agnostic
-4. Add tool-specific parsing only in the relevant tool wrapper
-5. Open a pull request
+4. Keep Swiggy MCP as one platform integration, not the whole product
+5. Add tool-specific parsing only in the relevant tool wrapper
+6. Open a pull request
 
 Please follow [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
 
@@ -359,5 +362,5 @@ Distributed under the MIT License. See [`LICENSE`](LICENSE) for more information
 ---
 
 <div align="center">
-  <sub>Built for MCP-first commerce integrations on Swiggy Instamart</sub>
+  <sub>Built for platform comparison, with Swiggy MCP included as one integration</sub>
 </div>

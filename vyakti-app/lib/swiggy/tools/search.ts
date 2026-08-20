@@ -1,12 +1,11 @@
 /**
  * lib/swiggy/tools/search.ts
  *
- * Implements the Swiggy MCP "searchProducts" capability.
- * Uses the RPC client to execute the call.
+ * Implements the Swiggy MCP "search_products" capability.
+ * Uses the RPC client to execute the call and returns the raw SDK response.
  */
 
-import type { RpcClient } from "../transport/rpc";
-import type { SwiggyProduct } from "../types";
+import type { RpcClient, McpToolCallResult } from "../transport/rpc";
 
 export class SearchTool {
   constructor(private rpc: RpcClient) {}
@@ -14,7 +13,7 @@ export class SearchTool {
   /**
    * Searches for products using the Swiggy MCP.
    */
-  async searchProducts(query: string): Promise<SwiggyProduct[]> {
-    return this.rpc.call<SwiggyProduct[], { query: string }>("searchProducts", { query });
+  async searchProducts(query: string): Promise<McpToolCallResult> {
+    return this.rpc.callTool("search_products", { query });
   }
 }

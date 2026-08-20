@@ -12,11 +12,12 @@ import { OAuthManager } from "./auth/oauth";
 import { HttpTransport } from "./transport/http";
 import { RpcClient } from "./transport/rpc";
 
+import { AddressesTool } from "./tools/addresses";
 import { SearchTool } from "./tools/search";
 import { CartTool } from "./tools/cart";
 import { CheckoutTool } from "./tools/checkout";
 
-import type { SwiggyProduct, SwiggyCartItem } from "./types";
+import type { SwiggyCartItem } from "./types";
 
 export type { OAuthTokens, SwiggyCartItem, SwiggyProduct } from "./types";
 
@@ -26,6 +27,7 @@ export class SwiggyClient {
   private rpc: RpcClient;
 
   // Tools
+  private addressesTool: AddressesTool;
   private searchTool: SearchTool;
   private cartTool: CartTool;
   private checkoutTool: CheckoutTool;
@@ -39,6 +41,7 @@ export class SwiggyClient {
     this.rpc = new RpcClient(this.http);
 
     // 3. Initialize Tools Layer
+    this.addressesTool = new AddressesTool(this.rpc);
     this.searchTool = new SearchTool(this.rpc);
     this.cartTool = new CartTool(this.rpc);
     this.checkoutTool = new CheckoutTool(this.rpc);
@@ -56,8 +59,15 @@ export class SwiggyClient {
   /**
    * Exchanges an OAuth callback code for valid tokens.
    */
-  async handleCallbackCode(code: string): Promise<void> {
-    return this.auth.exchangeCodeForTokens(code);
+  async handleCallbackCode(code: string, state: string): Promise<void> {
+    return this.auth.exchangeCodeForTokens(code, state);
+  }
+
+  /**
+   * Returns the authenticated user's saved addresses from Swiggy MCP.
+   */
+  async getAddresses() {
+    return this.addressesTool.getAddresses();
   }
 
   // ── SDK Public API (Delegates to tools) ─────────────────────────────────────
@@ -65,7 +75,7 @@ export class SwiggyClient {
   /**
    * Search for products on Swiggy Instamart via MCP.
    */
-  async searchProducts(query: string): Promise<SwiggyProduct[]> {
+  async searchProducts(query: string) {
     return this.searchTool.searchProducts(query);
   }
 
