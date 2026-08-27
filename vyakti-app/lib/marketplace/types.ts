@@ -28,11 +28,14 @@ export type ProductVariant = {
   searchKeywords: string[];
 };
 
-export type PlatformListing = {
+ export type Product = {
+  id: string;
+  /** Links back to ProductVariant.id — reuses existing brand/variant matching logic */
   variantId: string;
-  platform: "Blinkit" | "Zepto" | "Swiggy";
   price: number;
-  eta: string;
-  deepLink: string;
+  currency: string;
+  /** e.g. "1 L", "500 g" */
+  unit: string;
+  category: string;
   inStock: boolean;
 };

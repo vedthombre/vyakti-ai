@@ -1,86 +1,178 @@
 /**
  * lib/marketplace/aggregator.ts
  *
- * MarketplaceAggregator — the single orchestration layer between the
- * /api/search route and all marketplace providers.
+ * v2.0: this file no longer fans out to Blinkit/Zepto/Swiggy providers.
+ * It is now the AI buyer's DETERMINISTIC decision engine: takes a parsed
+ * Intent and the single-merchant catalog (lib/mock/catalog.ts) and returns
+ * a Decision — one selected product, a human-readable reasoning trace, and
+ * a short list of alternatives.
  *
- * ── Responsibilities (exhaustive list) ───────────────────────────────────────
- *   1. Fan out search() to all registered providers concurrently
- *   2. Merge their ProviderSearchResult.products into a single flat list
- *   3. Filter by relevance and rank (cheapest-per-platform)
- *   4. Handle individual provider failures gracefully
+ * IMPORTANT (decision #3, locked): product selection here is rules-based
+ * only. No LLM call decides the winner. An LLM may only ever be used later
+ * to *rephrase* the reasoning strings into nicer prose — never to change
+ * which candidate wins.
  *
- * ── What this file must NEVER contain ────────────────────────────────────────
- *   ✗ Firecrawl / HTTP scraping logic     → belongs in each provider
- *   ✗ MCP calls                           → belongs in each provider
- *   ✗ Platform-specific URL construction  → belongs in each provider
- *   ✗ Catalog fallback logic              → belongs in each provider
- *   ✗ In-memory cache                     → belongs in each provider
- *   ✗ Hardcoded platform names            → providers expose `name` for logging
- *
- * Adding a new marketplace = create a new provider + add it to defaultAggregator.
- * The Aggregator and UI require zero changes.
+ * Old multi-provider fan-out logic (Blinkit/Zepto/Swiggy Promise.allSettled)
+ * has been removed from this file. That logic still exists, unplugged, in
+ * lib/marketplace/providers/*.ts and app/api/search/route.ts (Vyakti 1.0,
+ * recoverable, not deleted — see project decisions).
  */
 
-import type { MarketplaceProvider } from "@/lib/marketplace/provider";
-import type { ScrapedProduct, MerchantSearchResult } from "@/lib/scraper/merchantSearch";
-import { rankByPlatformCheapest, relevanceScore } from "@/lib/scraper/merchantSearch";
-import { BlinkitProvider } from "@/lib/marketplace/providers/blinkit";
-import { ZeptoProvider }   from "@/lib/marketplace/providers/zepto";
-import { SwiggyProvider }  from "@/lib/marketplace/providers/swiggy";
+import { BRANDS, findBrands, getVariantsForBrand } from "@/lib/mock/catalog";
+import type { Brand } from "@/lib/mock/catalog";
+import type { Intent } from "@/lib/schemas/intent";
+import type { Decision, DecisionCandidate } from "@/lib/schemas/decision";
 
-// ── Aggregator ────────────────────────────────────────────────────────────────
+// ── Unit normalization ──────────────────────────────────────────────────────
+// Maps loose spoken units ("litre", "ltr", "kg", "packet"...) and catalog
+// units ("500 ml", "1 L", "6 pcs"...) onto a small shared vocabulary so they
+// can be compared. Deliberately simple — the demo catalog uses a handful of
+// unit types only.
 
-export class MarketplaceAggregator {
-  constructor(private readonly providers: MarketplaceProvider[]) {}
+const UNIT_SYNONYMS: Record<string, string> = {
+  l: "l", litre: "l", liter: "l", litres: "l", liters: "l", ltr: "l",
+  ml: "ml", millilitre: "ml", millilitres: "ml",
+  kg: "kg", kilogram: "kg", kilograms: "kg", kilo: "kg",
+  g: "g", gram: "g", grams: "g",
+  pcs: "pcs", pc: "pcs", piece: "pcs", pieces: "pcs",
+  pack: "pcs", packet: "pcs", packets: "pcs",
+};
 
-  async search(query: string, variantId?: string): Promise<MerchantSearchResult> {
-    // 1. Fan out to all providers concurrently — never let one block another
-    const settled = await Promise.allSettled(
-      this.providers.map((p) => p.search(query, variantId))
-    );
-
-    // 2. Merge — log rejected providers, continue with the rest
-    const allProducts: ScrapedProduct[] = [];
-    let anyLive = false;
-
-    for (const [i, result] of settled.entries()) {
-      if (result.status === "fulfilled") {
-        allProducts.push(...result.value.products);
-        if (result.value.source === "live" || result.value.source === "cache") {
-          anyLive = true;
-        }
-      } else {
-        console.warn(
-          `[Aggregator] Provider "${this.providers[i].name}" rejected:`,
-          result.reason
-        );
-      }
-    }
-
-    // 3. Relevance filter — remove completely unrelated results
-    const relevant = allProducts.filter(
-      (p) => relevanceScore(p.name, query) >= 0.4
-    );
-    const filtered = relevant.length > 0 ? relevant : allProducts;
-
-    // 4. Rank: one best listing per platform, cheapest first
-    const ranked = rankByPlatformCheapest(filtered);
-
-    return {
-      source:    anyLive ? "live" : "fallback",
-      query,
-      products:  ranked,
-      scrapedAt: new Date().toISOString(),
-    };
-  }
+function normalizeUnitType(raw: string): string | null {
+  const key = raw.trim().toLowerCase().replace(/[^a-z]/g, "");
+  return UNIT_SYNONYMS[key] ?? null;
 }
 
-// ── Default singleton ─────────────────────────────────────────────────────────
-// New marketplaces are added here — nowhere else.
+function parseProductUnit(unit: string): { amount: number; type: string } | null {
+  const match = unit.trim().toLowerCase().match(/^([\d.]+)\s*([a-z]+)$/);
+  if (!match) return null;
+  const type = normalizeUnitType(match[2]);
+  if (!type) return null;
+  return { amount: parseFloat(match[1]), type };
+}
 
-export const defaultAggregator = new MarketplaceAggregator([
-  new BlinkitProvider(),
-  new ZeptoProvider(),
-  new SwiggyProvider(), // stub — replace body of SwiggyProvider.search() when MCP is ready
-]);
+// ── Candidate collection ──────────────────────────────────────────────────────
+
+type ScoredCandidate = {
+  candidate: DecisionCandidate;
+  score: number;
+  reasons: string[];
+};
+
+/**
+ * Step 1 of plan §7: filter catalog by item_name/brand/unit.
+ * Reuses findBrands() (existing keyword matching) rather than reinventing
+ * product search — it's the same logic CLARIFY_BRAND already relies on.
+ */
+function collectCandidates(intent: Intent): DecisionCandidate[] {
+  const query = intent.item_name?.trim() ?? "";
+  const matchedBrands = query ? findBrands(query) : BRANDS;
+
+  // If the user also gave an explicit brand_preference, narrow further —
+  // but don't discard everything if nothing matches (fall back to matchedBrands).
+  let brandPool: Brand[] = matchedBrands;
+  if (intent.brand_preference) {
+    const pref = intent.brand_preference.toLowerCase();
+    const narrowed = matchedBrands.filter(
+      (b) =>
+        b.name.toLowerCase().includes(pref) ||
+        b.keywords.some((k) => k.includes(pref) || pref.includes(k))
+    );
+    if (narrowed.length > 0) brandPool = narrowed;
+  }
+
+  const candidates: DecisionCandidate[] = [];
+  for (const brand of brandPool) {
+    const variantsWithProduct = getVariantsForBrand(brand.id);
+    for (const v of variantsWithProduct) {
+      if (!v.product) continue; // catalog gap — skip rather than crash
+      candidates.push({
+        productId: v.product.id,
+        variantId: v.id,
+        brandId: brand.id,
+        brandName: brand.name,
+        name: v.name,
+        image: brand.emoji,
+        price: v.product.price,
+        currency: v.product.currency,
+        unit: v.product.unit,
+        inStock: v.product.inStock,
+      });
+    }
+  }
+  return candidates;
+}
+
+/**
+ * Step 2 of plan §7: deterministic rules-based scoring.
+ * Tiers, highest first: brand match > in-stock (hard filter) > unit/quantity
+ * match > price as final tiebreaker. Every scored candidate carries the
+ * plain-language reason(s) it earned its score, so the reasoning trace is
+ * built alongside scoring rather than reverse-engineered after the fact.
+ */
+function scoreCandidates(intent: Intent, candidates: DecisionCandidate[]): ScoredCandidate[] {
+  const wantedUnitType = intent.unit ? normalizeUnitType(intent.unit) : null;
+  const wantedBrand = intent.brand_preference?.toLowerCase().trim();
+
+  return candidates
+    .filter((c) => c.inStock) // hard filter — out-of-stock is never selectable
+    .map((c) => {
+      let score = 0;
+      const reasons: string[] = [];
+
+      if (wantedBrand && c.brandName.toLowerCase().includes(wantedBrand)) {
+        score += 100;
+        reasons.push(`Matches the brand you asked for ("${c.brandName}").`);
+      }
+
+      if (wantedUnitType) {
+        const parsed = parseProductUnit(c.unit);
+        if (parsed && parsed.type === wantedUnitType) {
+          if (!intent.quantity || parsed.amount === intent.quantity) {
+            score += 50;
+            reasons.push(`Matches the quantity you asked for (${c.unit}).`);
+          } else {
+            score += 20;
+            reasons.push(`Closest available size in the unit you asked for (${c.unit}).`);
+          }
+        }
+      }
+
+      reasons.push(`In stock right now.`);
+      score += 1; // tiny base score so every in-stock candidate is comparable
+
+      return { candidate: c, score, reasons };
+    })
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      return a.candidate.price - b.candidate.price; // tiebreaker only, never primary signal
+    });
+}
+
+/**
+ * Public entry point. Returns null when nothing in the catalog is even
+ * a plausible match — caller (page.tsx, Stage 9) routes that to ERROR,
+ * same catalog-miss message as before (plan §7, point 4).
+ */
+export function decide(intent: Intent): Decision | null {
+  const candidates = collectCandidates(intent);
+  const scored = scoreCandidates(intent, candidates);
+
+  if (scored.length === 0) return null;
+
+  const [top, ...rest] = scored;
+  const reasoning = [...top.reasons];
+  if (rest.length > 0) {
+    reasoning.push(
+      `Picked over ${rest.length} other in-stock option${rest.length > 1 ? "s" : ""} as the best match.`
+    );
+  } else {
+    reasoning.push(`Only matching in-stock option found.`);
+  }
+
+  return {
+    selected: top.candidate,
+    reasoning,
+    alternatives: rest.slice(0, 3).map((s) => s.candidate),
+  };
+}
