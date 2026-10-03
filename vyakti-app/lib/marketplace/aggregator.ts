@@ -18,7 +18,7 @@
  * recoverable, not deleted — see project decisions).
  */
 
-import { BRANDS, findBrands, getVariantsForBrand } from "@/lib/mock/catalog";
+import { BRANDS, VARIANTS, findBrands, getVariantsForBrand, getProductForVariant } from "@/lib/mock/catalog";
 import type { Brand } from "@/lib/mock/catalog";
 import type { Intent } from "@/lib/schemas/intent";
 import type { Decision, DecisionCandidate } from "@/lib/schemas/decision";
@@ -175,4 +175,68 @@ export function decide(intent: Intent): Decision | null {
     reasoning,
     alternatives: rest.slice(0, 3).map((s) => s.candidate),
   };
+}
+
+/**
+ * Builds a Decision for a variant the user explicitly picked via
+ * CLARIFY_BRAND/CLARIFY_VARIANT taps (page.tsx handleVariantSelect).
+ * Unlike decide(), this never overrides the user's manual choice — it
+ * packages that choice into the same auditable Decision/reasoning shape.
+ * Sibling variants (other sizes of the same brand) become `alternatives`.
+ *
+ * Returns null only if the chosen variant is unknown or out of stock —
+ * an out-of-stock item can never be selected (mirrors decide(), decision #3).
+ */
+export function decideForVariant(intent: Intent, variantId: string): Decision | null {
+  const variant = VARIANTS.find((v) => v.id === variantId);
+  const product = getProductForVariant(variantId);
+  if (!variant || !product || !product.inStock) return null;
+
+  const brand = BRANDS.find((b) => b.id === variant.brandId);
+  if (!brand) return null;
+
+  const selected: DecisionCandidate = {
+    productId: product.id,
+    variantId: variant.id,
+    brandId: brand.id,
+    brandName: brand.name,
+    name: variant.name,
+    image: brand.emoji,
+    price: product.price,
+    currency: product.currency,
+    unit: product.unit,
+    inStock: product.inStock,
+  };
+
+  const reasoning: string[] = [`You chose ${brand.name}.`];
+  const wantedUnitType = intent.unit ? normalizeUnitType(intent.unit) : null;
+  if (wantedUnitType) {
+    const parsed = parseProductUnit(product.unit);
+    if (parsed && parsed.type === wantedUnitType) {
+      reasoning.push(`Matches the size you asked for (${product.unit}).`);
+    } else {
+      reasoning.push(`Selected size: ${product.unit}.`);
+    }
+  } else {
+    reasoning.push(`Selected size: ${product.unit}.`);
+  }
+  reasoning.push("In stock and ready to order.");
+
+  const alternatives: DecisionCandidate[] = getVariantsForBrand(brand.id)
+    .filter((v) => v.id !== variantId && v.product?.inStock)
+    .map((v) => ({
+      productId: v.product!.id,
+      variantId: v.id,
+      brandId: brand.id,
+      brandName: brand.name,
+      name: v.name,
+      image: brand.emoji,
+      price: v.product!.price,
+      currency: v.product!.currency,
+      unit: v.product!.unit,
+      inStock: v.product!.inStock,
+    }))
+    .slice(0, 3);
+
+  return { selected, reasoning, alternatives };
 }
