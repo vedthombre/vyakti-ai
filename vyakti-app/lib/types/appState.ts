@@ -15,5 +15,9 @@ export type AppState =
   | "CLARIFY_BRAND"
   | "CLARIFY_VARIANT"
   | "CLARIFY_CATEGORY"
-  | "READY_TO_PAY"
+  | "DECIDING"
+  | "AWAITING_APPROVAL"
+  | "PAYING"
+  | "PAID"
+  | "PAYMENT_FAILED"
   | "ERROR";

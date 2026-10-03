@@ -64,6 +64,7 @@ async function parseIntent(transcript: string): Promise<Intent> {
       stage: "INTENT",
     });
   }
+    console.log("[DEBUG /api/intent response]", raw);
 
   // Validate & coerce with Zod — guarantees downstream components
   // always receive a fully-typed, defaulted Intent object.

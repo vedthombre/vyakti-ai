@@ -7,8 +7,9 @@ import type { AppState } from "@/lib/types/appState";
 import HoldToTalkButton   from "@/components/HoldToTalkButton";
 import TextInputField     from "@/components/TextInputField";
 import ChainOfThought     from "@/components/ChainOfThought";
-import MarketplaceSurface from "@/components/MarketplaceSurface";
-import type { ScrapedProduct } from "@/lib/scraper/merchantSearch";
+import DecisionExplainer  from "@/components/DecisionExplainer";
+import PaymentGate        from "@/components/PaymentGate";
+import PaymentStatus      from "@/components/PaymentStatus";
 
 import {
   runIntentPipeline,
@@ -19,10 +20,11 @@ import {
 import {
   findBrands,
   getVariantsForBrand,
-  getListings,
 } from "@/lib/mock/catalog";
-import type { Brand, ProductVariant, PlatformListing } from "@/lib/mock/catalog";
+import type { Brand, ProductVariant, Product } from "@/lib/mock/catalog";
 import type { Intent } from "@/lib/schemas/intent";
+import type { Decision } from "@/lib/schemas/decision";
+import { decideForVariant } from "@/lib/marketplace/aggregator";
 
 // ── CoT drip helper ───────────────────────────────────────────────────────────
 
@@ -45,11 +47,20 @@ export default function AgentPage() {
   const [intent,          setIntent]          = useState<Intent | null>(null);
   const [brands,          setBrands]          = useState<Brand[]>([]);
   const [selectedBrand,   setSelectedBrand]   = useState<Brand | null>(null);
-  const [variants,        setVariants]        = useState<(ProductVariant & { listings: PlatformListing[] })[]>([]);
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
-  const [listings,        setListings]        = useState<PlatformListing[] | ScrapedProduct[]>([]);
-  const [listingSource,   setListingSource]   = useState<"live" | "cache" | "fallback">("fallback");
+  const [variants,        setVariants]        = useState<(ProductVariant & { product: Product | undefined })[]>([]);
+  const [decision,        setDecision]        = useState<Decision | null>(null);
+  const [paymentResult,   setPaymentResult]   = useState<{ orderId: string; paymentId: string } | null>(null);
+  const [paymentFailureReason, setPaymentFailureReason] = useState<string | null>(null);
   const [errorMsg,        setErrorMsg]        = useState<string | null>(null);
+
+  // Per-page-load identifier tying this session's audit trail entries
+  // together (plan §10). Not the same as a real authenticated userId —
+  // see Stage 9 handoff note on NextAuth wiring being deferred.
+  const [sessionId] = useState<string>(() =>
+    typeof crypto !== "undefined" && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `session-${Date.now()}`
+  );
 
   const { data: session } = useSession();
   const userName = session?.user?.name || "Guest";
@@ -63,9 +74,9 @@ export default function AgentPage() {
     setBrands([]);
     setSelectedBrand(null);
     setVariants([]);
-    setSelectedVariant(null);
-    setListings([]);
-    setListingSource("fallback");
+    setDecision(null);
+    setPaymentResult(null);
+    setPaymentFailureReason(null);
     setErrorMsg(null);
   }, []);
 
@@ -120,44 +131,33 @@ export default function AgentPage() {
     setAppState("CLARIFY_BRAND");
   }, [handleBrandSelect]);
 
-  // ── User selected a variant → live search then show price comparison ──
-  const handleVariantSelect = useCallback(async (variant: ProductVariant) => {
-    setSelectedVariant(variant);
-    setAppState("THINKING");
-    setCotSteps(["Checking live prices across Blinkit, Zepto & Swiggy..."]);
-
-    try {
-      // Build a specific query: brand + product name + sku (e.g. "Amul Gold Full Cream Milk 2L")
-      const searchQuery = `${variant.name} ${variant.sku}`;
-      const res = await fetch("/api/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: searchQuery, variantId: variant.id }),
-      });
-
-      const data = await res.json();
-
-      if (data.success && data.listings?.length > 0) {
-        setListings(data.listings);
-        setListingSource(data.source);
-      } else {
-        // Firecrawl returned nothing → use catalog fallback
-        console.warn("[page] Live search empty, falling back to catalog");
-        const fallback = getListings(variant.id);
-        setListings(fallback);
-        setListingSource("fallback");
-      }
-    } catch (e) {
-      console.error("[page] Search API error:", e);
-      // Still show UI using catalog data
-      const fallback = getListings(variant.id);
-      setListings(fallback);
-      setListingSource("fallback");
+  // ── User selected a variant → deterministic decision, then approval gate ──
+  const handleVariantSelect = useCallback((variant: ProductVariant) => {
+    if (!intent) {
+      setErrorMsg("Something went wrong — please start over.");
+      setAppState("ERROR");
+      return;
     }
 
+    setAppState("DECIDING");
     setCotSteps([]);
-    setAppState("READY_TO_PAY");
-  }, []);
+
+    const builtDecision = decideForVariant(intent, variant.id);
+
+    if (!builtDecision) {
+      setErrorMsg(`"${variant.name}" is currently out of stock.`);
+      setAppState("ERROR");
+      return;
+    }
+
+    setDecision(builtDecision);
+
+    dripSteps(builtDecision.reasoning, (step) => {
+      setCotSteps((prev) => [...prev, step]);
+    }).then(() => {
+      setAppState("AWAITING_APPROVAL");
+    });
+  }, [intent]);
 
   // ── Voice recording callback ───────────────────────────────────────────
   const handleRecordingStart = useCallback(
@@ -256,8 +256,8 @@ export default function AgentPage() {
           </div>
         )}
 
-        {/* ── TRANSCRIBING | THINKING ── */}
-        {(appState === "TRANSCRIBING" || appState === "THINKING") && (
+        {/* ── TRANSCRIBING | THINKING | DECIDING ── */}
+        {(appState === "TRANSCRIBING" || appState === "THINKING" || appState === "DECIDING") && (
           <div className="w-full flex flex-col items-center justify-center gap-10 min-h-[60vh]">
             <ChainOfThought steps={cotSteps} appState={appState} transcript={transcript} />
           </div>
@@ -324,7 +324,8 @@ export default function AgentPage() {
                 <button
                   key={v.id}
                   onClick={() => handleVariantSelect(v)}
-                  className="flex items-center justify-between p-4 rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#1D9E75] shadow-sm active:scale-[0.98] transition-all"
+                  disabled={!v.product?.inStock}
+                  className="flex items-center justify-between p-4 rounded-2xl bg-white border border-[#E5E7EB] hover:border-[#1D9E75] shadow-sm active:scale-[0.98] transition-all disabled:opacity-50 disabled:pointer-events-none"
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">{v.image}</span>
@@ -335,10 +336,10 @@ export default function AgentPage() {
                   </div>
                   <div className="text-right">
                     <p className="text-[13px] font-semibold text-[#1D9E75]">
-                      from ₹{Math.min(...v.listings.map(l => l.price))}
+                      {v.product ? `₹${v.product.price}` : "Unavailable"}
                     </p>
                     <p className="text-[11px] text-[#9CA3AF]">
-                      {v.listings.filter(l => l.inStock).length} stores
+                      {v.product?.inStock ? "In stock" : "Out of stock"}
                     </p>
                   </div>
                 </button>
@@ -350,14 +351,42 @@ export default function AgentPage() {
           </div>
         )}
 
-        {/* ── READY_TO_PAY ── */}
-        {appState === "READY_TO_PAY" && selectedVariant && (
+        {/* ── AWAITING_APPROVAL ── */}
+        {appState === "AWAITING_APPROVAL" && decision && intent && (
+          <div className="w-full flex flex-col justify-center h-full py-8 gap-4">
+            <DecisionExplainer decision={decision} appState={appState} />
+            <PaymentGate
+              decision={decision}
+              intent={intent}
+              sessionId={sessionId}
+              transcript={transcript}
+              onPaying={() => setAppState("PAYING")}
+              onPaid={(result) => { setPaymentResult(result); setAppState("PAID"); }}
+              onFailed={(reason) => { setPaymentFailureReason(reason); setAppState("PAYMENT_FAILED"); }}
+              onDecline={reset}
+            />
+          </div>
+        )}
+
+        {/* ── PAYING ── */}
+        {appState === "PAYING" && (
+          <div className="w-full flex flex-col items-center justify-center gap-4 min-h-[60vh] animate-transcript-in">
+            <div className="text-5xl">💳</div>
+            <p className="text-[15px] text-[#888780]">Complete your payment in the Razorpay window…</p>
+          </div>
+        )}
+
+        {/* ── PAID | PAYMENT_FAILED ── */}
+        {(appState === "PAID" || appState === "PAYMENT_FAILED") && decision && (
           <div className="w-full flex flex-col justify-center h-full py-8">
-            <MarketplaceSurface
-              variant={selectedVariant}
-              listings={listings}
-              source={listingSource}
-              onReset={reset}
+            <PaymentStatus
+              status={appState}
+              decision={decision}
+              orderId={paymentResult?.orderId}
+              paymentId={paymentResult?.paymentId}
+              failureReason={paymentFailureReason ?? undefined}
+              onRetry={() => setAppState("AWAITING_APPROVAL")}
+              onStartOver={reset}
             />
           </div>
         )}
