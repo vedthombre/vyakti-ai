@@ -1,243 +1,441 @@
-<div align="center">
+# 🛍️ VYAKTI — व्यक्ति
+### *The Manifestation of Intent*
 
-# *VYAKTI*
-### व्यक्ति — Swiggy MCP Client for Instamart
+> **Tell Vyakti what you want. It understands you, finds what you need, explains its choice, and helps you pay.**
 
-**A modular MCP-first commerce client for Swiggy Instamart, built on the official Model Context Protocol SDK.**
+**An agentic commerce AI that turns your intent into action — from voice to payment.**
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.1-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![MCP SDK](https://img.shields.io/badge/MCP%20SDK-%40modelcontextprotocol%2Fsdk-2f855a?style=for-the-badge)](https://www.npmjs.com/package/@modelcontextprotocol/sdk)
-[![OAuth 2.1](https://img.shields.io/badge/OAuth-2.1%20%2B%20PKCE-2b6cb0?style=for-the-badge)](https://www.oauth.com/oauth2-servers/authorization/the-authorization-request/)
-[![Swiggy](https://img.shields.io/badge/Swiggy-Instamart-ff6f00?style=for-the-badge)](https://www.swiggy.com/instamart)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
-
-[Live Demo](#) · [Report Bug](https://github.com/vedthombre/vyakti-ai/issues) · [Request Feature](https://github.com/vedthombre/vyakti-ai/issues)
-
-</div>
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Groq](https://img.shields.io/badge/Groq-Whisper%20%2B%20LLM-orange)](https://groq.com/)
+[![LangChain](https://img.shields.io/badge/LangChain-LLM-green)](https://www.langchain.com/)
+[![Razorpay](https://img.shields.io/badge/Razorpay-Payments-blue)](https://razorpay.com/)
+[![MCP](https://img.shields.io/badge/MCP-SDK-purple)](https://modelcontextprotocol.io/)
 
 ---
 
-## What is Vyakti?
+## 💡 What is Vyakti?
 
-Vyakti (व्यक्ति) is Sanskrit for **"a person" or "the manifestation of something"**. In this repo, it represents a focused MCP client for Swiggy Instamart — the idea that a user's intent should be translated into authenticated MCP tool calls with minimal transport code.
+Imagine saying:
 
-> "Connect once, authenticate cleanly, call tools directly."
+> **“Get me 2 litres of Amul milk.”**
 
-Vyakti is a **Swiggy MCP integration layer** that lets the app:
+Normally, you would open a shopping app, type the product, look through the results, choose one, and then pay.
 
-1. Authenticate through the existing OAuth 2.1 + PKCE flow.
-2. Connect to Swiggy's MCP endpoint using the official `@modelcontextprotocol/sdk`.
-3. Discover and call MCP tools without hand-writing JSON-RPC.
-4. Keep transport generic so tool wrappers can evolve independently.
+**Vyakti tries to make all of that much simpler.**
+
+You simply **tell Vyakti what you want**.
+
+Vyakti:
+
+1. 🎙️ **Listens** to your voice.
+2. 📝 **Understands** what you are asking for.
+3. 🧠 **Turns your words into a structured shopping request.**
+4. 🛒 **Looks at the available products and chooses a suitable option.**
+5. 💡 **Explains why that product was selected.**
+6. ✅ **Asks you for approval.**
+7. 💳 **Creates a Razorpay payment and verifies it.**
+
+So instead of:
+
+**Search → Browse → Compare → Choose → Pay**
+
+Vyakti aims for:
+
+**Tell → Understand → Decide → Approve → Pay**
+
+> **The idea is simple: you tell the computer what you want, instead of telling it how to find it.**
 
 ---
 
-## ✨ Features
+# 🎙️ How Vyakti Works
 
-| Feature | Description |
+The entire experience can be understood in one simple flow:
+
+```text
+             🎙️ YOU SPEAK
+                  │
+                  ▼
+       📝 GROQ WHISPER
+          Voice → Text
+                  │
+                  ▼
+          🧠 AI UNDERSTANDS
+       Groq LLM + LangChain
+                  │
+                  ▼
+          🛒 VYAKTI DECIDES
+       Deterministic Rules Engine
+                  │
+                  ▼
+          💡 AI BUYER'S PICK
+        Product + Explanation
+                  │
+                  ▼
+          ✅ YOU APPROVE
+                  │
+                  ▼
+            💳 PAY
+             Razorpay
+                  │
+                  ▼
+             🎉 PAID
+```
+
+### In kid-friendly words:
+
+**You:** “I want 2L Amul milk.”
+
+**Vyakti:** “Got it! I found this one. Here's why I picked it.”
+
+**You:** “Yes, buy it.”
+
+**Vyakti:** “Okay! Let's pay.”
+
+That's the idea behind **agentic commerce**.
+
+---
+
+# 🧠 What Makes Vyakti Different?
+
+Vyakti isn't simply a chatbot that talks about products.
+
+It is designed as an **agentic system** — meaning it can take a user's request, understand what needs to happen, make a decision, and move the task forward.
+
+The important part is that **AI does not control everything**.
+
+The LLM is responsible for understanding the user's words.
+
+The actual product selection is handled by a **deterministic rules engine**.
+
+That means the system doesn't randomly ask an AI model:
+
+> “Which product do you like?”
+
+Instead, it follows explicit rules such as:
+
+```text
+Brand Match
+     ↓
+Is it in stock?
+     ↓
+Does the unit/quantity match?
+     ↓
+Compare price
+     ↓
+Select product
+```
+
+This makes the decision:
+
+- 🔍 Understandable
+- 🔁 Reproducible
+- 🧪 Testable
+- 📋 Auditable
+- ⚡ Deterministic
+
+**The AI understands.  
+The rules decide.  
+The user approves.**
+
+---
+
+# 🚦 Application State Machine
+
+Vyakti is built around a state machine.
+
+In simple words:
+
+> **The app always knows what it is doing and what should happen next.**
+
+| State | What happens |
 |---|---|
-| 🔐 **OAuth Layer** | PKCE-based auth with persistent verifier and token storage abstraction |
-| 🧩 **Official MCP SDK** | Uses `@modelcontextprotocol/sdk` for client lifecycle and tool execution |
-| 🔄 **Generic Transport** | Transport stays tool-agnostic and returns raw MCP responses unchanged |
-| 📡 **Connection Lifecycle** | `connect()` and `disconnect()` are handled inside the transport layer |
-| 🧰 **Tool Discovery** | `listTools()` is available for server introspection without custom protocol code |
-| 📍 **First Working Tool** | `getAddresses()` proves authenticated MCP tool execution end to end |
-| 🧪 **Testable Boundaries** | Auth, transport, and tool wrappers are modular and independently replaceable |
-| 🏗️ **Architecture Preserved** | Marketplace, provider, and UI layers stay untouched while MCP evolves |
+| `IDLE` | 🎙️ Vyakti is ready to listen |
+| `RECORDING` | 🎤 You are speaking |
+| `TRANSCRIBING` | 📝 Whisper is turning speech into text |
+| `THINKING` | 🧠 The LLM is understanding your request |
+| `CLARIFY_BRAND` | ❓ Vyakti needs to know which brand you mean |
+| `CLARIFY_VARIANT` | ❓ Vyakti needs to know which product variant you mean |
+| `DECIDING` | 🛒 The rules engine is selecting a product |
+| `AWAITING_APPROVAL` | ✅ Vyakti shows its recommendation and waits for you |
+| `PAYING` | 💳 Razorpay payment is open |
+| `PAID` | 🎉 Payment succeeded |
+| `PAYMENT_FAILED` | ⚠️ Payment failed and you can retry |
+| `ERROR` | ❌ Something went wrong and you can start again |
+
+This state-based design keeps the shopping flow predictable and prevents the application from jumping between unrelated actions.
 
 ---
 
-## 🏗️ Architecture
+# 🏗️ Architecture
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     SwiggyClient API                        │
-│                                                             │
-│   getAuthorizationUrl()                                     │
-│   handleCallbackCode()                                      │
-│   getAddresses()                                            │
-│   listTools()                                               │
-│   searchProducts() / addToCart() / checkout()              │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-          │                              │
-          ▼                              ▼
-  ┌───────────────┐             ┌────────────────────┐
-  │  Tool Layer   │             │   SDK Transport    │
-  │               │             │                    │
-  │  Addresses    │             │  Streamable HTTP   │
-  │  Search       │             │  connect/disconnect│
-  │  Cart         │             │  raw MCP responses │
-  │  Checkout     │             │  raw MCP responses │
-  └───────────────┘             └────────────────────┘
-                                        │
-                                        ▼
-                               ┌────────────────────┐
-                               │     OAuth Layer    │
-                               │                    │
-                               │  PKCE verifier     │
-                               │  access token      │
-                               │  storage abstraction│
-                               └────────────────────┘
-```
-
-### State Machine
-
-```
-UNAUTHENTICATED ──[getAuthorizationUrl]──► AUTH_URL_READY
-        │                                     │
-        │                                     └──[handleCallbackCode]
-        ▼
-   TOKEN_STORED ──[connect]──► MCP_CONNECTED ──[callTool/listTools]──► TOOL_RESULT
-        │                                     │
-        └──────────────[401 / expired token]──┘
-                                              │
-                                              ▼
-                                         REAUTH_REQUIRED
+```text
+┌──────────────────────┐
+│     🎙️ Voice Input   │
+└──────────┬───────────┘
+           │
+           ▼
+┌────────────────────────────┐
+│ /api/voice                 │
+│ Groq Whisper               │
+│ Speech → Text               │
+└──────────┬─────────────────┘
+           │
+           ▼
+┌────────────────────────────┐
+│ /api/intent               │
+│ LangChain + Groq LLM       │
+│ Text → Structured Intent   │
+└──────────┬─────────────────┘
+           │
+           ▼
+┌────────────────────────────┐
+│ aggregator.ts              │
+│ Deterministic Rules Engine │
+│ Intent → Product Decision  │
+└──────────┬─────────────────┘
+           │
+           ▼
+┌────────────────────────────┐
+│ DecisionExplainer           │
+│ AI Buyer's Pick             │
+│ + Decision Explanation      │
+└──────────┬─────────────────┘
+           │
+           ▼
+┌────────────────────────────┐
+│ PaymentGate                 │
+│ Approve / Decline            │
+└──────────┬─────────────────┘
+           │
+           ▼
+┌────────────────────────────┐
+│ /api/payment/create-order  │
+│ Razorpay Order Creation    │
+└──────────┬─────────────────┘
+           │
+           ▼
+┌────────────────────────────┐
+│ /api/payment/verify        │
+│ HMAC Signature Verification│
+└──────────┬─────────────────┘
+           │
+           ▼
+       🎉 PAYMENT
 ```
 
 ---
 
-## 🗂️ Project Structure
+# 📁 Project Structure
 
-```
+```text
 vyakti-app/
+│
 ├── app/
 │   ├── api/
-│   │   └── auth/               # OAuth callback surface
-│   ├── globals.css             # Existing app styling
-│   ├── layout.tsx              # Root layout
-│   └── page.tsx                # Existing app shell
+│   │   ├── intent/
+│   │   │   └── route.ts
+│   │   │       # LangChain + Groq → structured Intent
+│   │   │
+│   │   ├── voice/
+│   │   │   └── route.ts
+│   │   │       # Groq Whisper → transcript
+│   │   │
+│   │   ├── payment/
+│   │   │   ├── create-order/
+│   │   │   │   # Razorpay order creation
+│   │   │   │
+│   │   │   └── verify/
+│   │   │       # Razorpay HMAC signature verification
+│   │   │
+│   │   └── auth/
+│   │       └── swiggy/
+│   │           # OAuth 2.1 + PKCE
+│   │           # Swiggy MCP authentication
+│   │
+│   └── page.tsx
+│       # State-machine orchestrator
+│
+├── components/
+│   ├── HoldToTalkButton.tsx
+│   │   # Voice recording
+│   │
+│   ├── ChainOfThought.tsx
+│   │   # Animated decision explanation
+│   │
+│   ├── MarketplaceSurface.tsx
+│   │   # Brand / variant clarification
+│   │
+│   ├── DecisionExplainer.tsx
+│   │   # AI Buyer's Pick + alternatives
+│   │
+│   ├── PaymentGate.tsx
+│   │   # Approve & Pay / Decline
+│   │
+│   ├── PaymentStatus.tsx
+│   │   # Payment success / failure
+│   │
+│   └── TextInputField.tsx
+│       # Text fallback for voice
 │
 ├── lib/
+│   ├── agent/
+│   │   └── intentParser.ts
+│   │       # Speech/text → Intent pipeline
+│   │
+│   ├── marketplace/
+│   │   └── aggregator.ts
+│   │       # Deterministic decision engine
+│   │
+│   ├── mock/
+│   │   └── catalog.ts
+│   │       # Product catalog
+│   │
+│   ├── schemas/
+│   │   ├── intent.ts
+│   │   │   # Zod Intent schema
+│   │   └── decision.ts
+│   │       # Zod Decision schema
+│   │
 │   ├── swiggy/
-│   │   ├── auth/
-│   │   │   ├── pkce.ts         # PKCE generation
-│   │   │   ├── storage.ts      # Token + verifier storage abstraction
-│   │   │   └── oauth.ts       # OAuth lifecycle and token refresh
-│   │   ├── transport/
-│   │   │   ├── http.ts         # MCP SDK-backed transport session
-│   │   │   └── rpc.ts          # Generic MCP facade
-│   │   ├── tools/
-│   │   │   ├── addresses.ts    # First MCP proof-of-life tool
-│   │   │   ├── search.ts       # Planned tool wrapper
-│   │   │   ├── cart.ts         # Planned tool wrapper
-│   │   │   └── checkout.ts     # Planned tool wrapper
-│   │   ├── client.ts           # Public Swiggy SDK entry point
-│   │   └── types.ts            # Shared Swiggy domain types
-│   ├── marketplace/            # Preserved marketplace layer
-│   └── mock/                   # Existing non-MCP support code
+│   │   # Swiggy MCP integration
+│   │
+│   └── types/
+│       └── appState.ts
+│           # Application state definitions
 │
-├── .env.local                  # API keys and auth settings (never commit)
-├── next.config.ts
-├── package.json
-└── tsconfig.json
+└── ...
 ```
 
 ---
 
-## 🔌 API Reference
+# 🛠️ Tech Stack
 
-### `SwiggyClient.getAuthorizationUrl()`
-Generates the OAuth authorization URL for the Swiggy MCP flow.
+| Layer | Technology | What it does |
+|---|---|---|
+| **Framework** | Next.js 15 | Builds the web application |
+| **Language** | TypeScript 5 | Keeps the application type-safe |
+| **Speech-to-Text** | Groq Whisper | Turns your voice into text |
+| **LLM** | Groq + LangChain | Understands the shopping request |
+| **Decision Engine** | Rules-based | Selects a product deterministically |
+| **Validation** | Zod | Makes sure data has the expected shape |
+| **Payments** | Razorpay | Creates and verifies payments |
+| **MCP** | Model Context Protocol SDK | Connects Vyakti with external tools |
+| **Authentication** | OAuth 2.1 + PKCE | Secure authorization for integrations |
+| **Integration** | Swiggy MCP | Provides an external commerce integration |
 
-**Purpose:** Start PKCE-based auth.
+---
 
-**Request:**
+# 🧩 Key Design Decisions
+
+## 1. The LLM does not choose the product
+
+This is one of the most important decisions in Vyakti.
+
+The LLM's job is:
+
+> **“What does the user want?”**
+
+The rules engine's job is:
+
+> **“Which available product satisfies that request?”**
+
+This separation makes the system easier to understand, test, and audit.
+
+---
+
+## 2. Payment never happens automatically
+
+Vyakti does **not** silently purchase something.
+
+The user always gets an approval step:
+
+```text
+AI Recommendation
+       ↓
+User Reviews
+       ↓
+   APPROVE?
+    ↙    ↘
+  YES     NO
+   ↓       ↓
+ PAYMENT   STOP
 ```
-No arguments.
+
+The final decision belongs to the user.
+
+---
+
+## 3. Payment retry does not change the product
+
+If a payment fails, Vyakti does not start the entire decision process again.
+
+Instead:
+
+```text
+Same Decision
+      ↓
+Retry Payment
 ```
 
-**Response:**
-```json
-"https://mcp.swiggy.com/auth/authorize?..."
+This prevents the system from unexpectedly changing the product during a payment retry.
+
+---
+
+## 4. Swiggy MCP is an integration, not the entire product
+
+Vyakti contains an OAuth 2.1 + MCP integration for Swiggy tools.
+
+However, the core shopping flow currently operates using a **local product catalog**.
+
+This separation allows the agentic shopping experience to be developed independently from external marketplace availability.
+
+---
+
+## 5. Voice is the primary interface, text is the fallback
+
+The preferred experience is:
+
+> 🎙️ **Speak naturally.**
+
+But if microphone access is unavailable, users can type their request instead.
+
+Text input skips speech recognition and goes directly to intent parsing.
+
+---
+
+# 🔐 Environment Variables
+
+Create a `.env.local` file:
+
+```env
+# ── Groq (STT + LLM) ──────────────────────────────────────────
+GROQ_API_KEY=
+
+# ── Razorpay ──────────────────────────────────────────────────
+RAZORPAY_KEY_ID=
+RAZORPAY_KEY_SECRET=
+NEXT_PUBLIC_RAZORPAY_KEY_ID=
+
+# ── Swiggy MCP (Optional) ─────────────────────────────────────
+SWIGGY_MCP_URL=https://mcp.swiggy.com/im
+SWIGGY_AUTHORIZATION_URL=https://mcp.swiggy.com/auth/authorize
+SWIGGY_TOKEN_URL=https://mcp.swiggy.com/auth/token
+SWIGGY_REDIRECT_URI=http://localhost:3000/api/auth/swiggy/callback
+
+# ── Application ────────────────────────────────────────────────
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
 ---
 
-### `SwiggyClient.handleCallbackCode(code)`
-Exchanges the authorization code for access token storage.
+# 🚀 Getting Started
 
-**Request:**
-```json
-{ "code": "authorization_code_from_callback" }
-```
-
-**Response:**
-```json
-void
-```
-
----
-
-### `SwiggyClient.getAddresses()`
-Calls the first verified MCP tool, `get_addresses`, and returns the raw SDK response.
-
-**Request:**
-```json
-{}
-```
-
-**Response:**
-```json
-{
-  "content": [],
-  "structuredContent": {},
-  "isError": false
-}
-```
-
----
-
-### `SwiggyClient.searchProducts(query)`
-Planned wrapper for MCP search tools.
-
-**Status:** Not yet wired to a real MCP tool.
-
----
-
-### `SwiggyClient.addToCart(item)`
-Planned wrapper for MCP cart tools.
-
-**Status:** Not yet wired to a real MCP tool.
-
----
-
-### `SwiggyClient.checkout(cart)`
-Planned wrapper for MCP checkout tools.
-
-**Status:** Not yet wired to a real MCP tool.
-
----
-
-### `listTools()`
-Returns the remote MCP tool catalog without interpreting it.
-
-**Status:** Available through the transport layer.
-
----
-
-### `callTool(name, arguments)`
-Calls any MCP tool generically and returns the raw MCP result.
-
-**Status:** Available through the transport layer.
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js ≥ 18
-- A Swiggy MCP-compatible OAuth flow
-- Access to the official `@modelcontextprotocol/sdk`
-
-### 1. Clone the repo
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/vedthombre/vyakti-ai.git
-cd vyakti-ai/vyakti-app
+git clone <your-repository-url>
+cd vyakti-app
 ```
 
 ### 2. Install dependencies
@@ -246,118 +444,91 @@ cd vyakti-ai/vyakti-app
 npm install
 ```
 
-### 3. Set up environment variables
+### 3. Add environment variables
 
-Copy the example and fill in your auth values:
+Create:
 
-```bash
-cp .env.example .env.local
+```text
+.env.local
 ```
 
-```env
-# ── Required for Swiggy MCP ─────────────────────────────
-SWIGGY_MCP_URL=https://mcp.swiggy.com/im
-SWIGGY_AUTHORIZATION_URL=https://mcp.swiggy.com/auth/authorize
-SWIGGY_TOKEN_URL=https://mcp.swiggy.com/auth/token
-SWIGGY_REDIRECT_URI=http://localhost:3000/api/auth/swiggy/callback
+and add the required keys.
 
-# ── Optional app configuration ───────────────────────────
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
-
-> ⚠️ **Never commit `.env.local` to Git.** It is already listed in `.gitignore`.
-
-### 4. Run the development server
+### 4. Start the development server
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+### 5. Open Vyakti
+
+Visit:
+
+```text
+http://localhost:3000
+```
+
+Then press the microphone button and **tell Vyakti what you want.**
 
 ---
 
-## 🧪 Testing the MCP Flow
+# 🎯 The Bigger Idea
 
-Once the app is running:
+Traditional e-commerce makes people learn how to use the application.
 
-1. Call `await swiggyClient.getAuthorizationUrl()` and complete the Swiggy login flow.
-2. Pass the callback code into `await swiggyClient.handleCallbackCode(code)`.
-3. Call `await swiggyClient.getAddresses()` to verify the first end-to-end MCP tool invocation.
-4. Use `await swiggyClient.listTools()` if you need to inspect the remote tool catalog.
-5. Keep search, cart, and checkout disabled until their MCP wrappers are explicitly added.
+You need to:
 
-> 💡 This milestone validates the MCP SDK, the OAuth integration, and the transport lifecycle without coupling the transport to any specific tool schema.
+**Search → Filter → Browse → Compare → Select → Checkout**
 
----
+Vyakti explores a different interaction model:
 
-## 🛣️ Roadmap
+**Intent → Understanding → Decision → Approval → Payment**
 
-### MVP (Current — v0.1)
-- [x] OAuth 2.1 + PKCE auth layer
-- [x] Official MCP SDK integration
-- [x] Streamable HTTP connection lifecycle
-- [x] Generic raw `callTool(name, arguments)` transport
-- [x] First working MCP tool: `get_addresses`
-- [x] Public `SwiggyClient` API preserved
+The long-term idea is simple:
 
-### Phase 2
-- [ ] `search_products` MCP wrapper
-- [ ] Cart and checkout MCP wrappers
-- [ ] Tool result shaping in the tool layer
-- [ ] Better session persistence for auth state
-- [ ] Remote tool discovery caching
+> **People should be able to tell computers what they want, instead of learning how to operate every application.**
 
-### Phase 3
-- [ ] Provider-level integration
-- [ ] Marketplace consumption of Swiggy MCP responses
-- [ ] UI surfaces for authenticated Instamart flows
-- [ ] Optional voice or intent entry points if still needed
+Vyakti is an experiment toward that future.
 
 ---
 
-## 🔧 Tech Stack
+# 🌱 What's Next?
 
-| Layer | Technology | Purpose |
-|---|---|---|
-| **Framework** | Next.js 16 (App Router) | Existing app shell and server/client surfaces |
-| **Language** | TypeScript 5 | End-to-end type safety |
-| **MCP Client** | `@modelcontextprotocol/sdk` | Official MCP connection and tool execution |
-| **Auth** | OAuth 2.1 + PKCE | Swiggy authentication and token lifecycle |
-| **Transport** | Streamable HTTP | Remote MCP session transport |
-| **Schema** | Zod | SDK peer dependency and runtime validation support |
-| **Architecture** | Modular Swiggy client | Keeps auth, transport, tools, and consumers separate |
+Vyakti's architecture is designed so that more commerce capabilities can be added without changing the fundamental interaction model.
 
----
+Potential future directions include:
 
-## 🤝 Contributing
+- 🌐 More real-world marketplace integrations
+- 🛒 Live product availability
+- 💰 Better price and value comparison
+- 📍 Location-aware product selection
+- 📦 Delivery-time optimization
+- 🤖 More capable commerce agents
+- 🔐 Stronger authentication and authorization
+- 💳 More complete end-to-end checkout flows
 
-Contributions are welcome. For this codebase, keep changes aligned with the MCP-first architecture:
+The goal is not to build another shopping website.
 
-1. Fork the repo
-2. Create a feature branch: `git checkout -b feat/your-feature`
-3. Keep transport generic and tool-agnostic
-4. Add tool-specific parsing only in the relevant tool wrapper
-5. Open a pull request
-
-Please follow [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
+**The goal is to build an interface where your intent becomes the starting point of commerce.**
 
 ---
 
-## 📄 License
+# ❤️ Why Vyakti?
 
-Distributed under the MIT License. See [`LICENSE`](LICENSE) for more information.
+Because shopping shouldn't always begin with:
+
+> **“Which app should I open?”**
+
+Sometimes it should begin with:
+
+> **“I need milk.”**
+
+And that's where Vyakti starts.
 
 ---
 
-## 👤 Author
+## 👨‍💻 Built with curiosity, AI, and a lot of experimentation.
 
-**Ved Thombre**
-- GitHub: [@vedthombre](https://github.com/vedthombre)
-- Project: [vyakti-ai](https://github.com/vedthombre/vyakti-ai)
+**VYAKTI — व्यक्ति**
 
----
-
-<div align="center">
-  <sub>Built for MCP-first commerce integrations on Swiggy Instamart</sub>
-</div>
+### *Your intent. Understood.*
